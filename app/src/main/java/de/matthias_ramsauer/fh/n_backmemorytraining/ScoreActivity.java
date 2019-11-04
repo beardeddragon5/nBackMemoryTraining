@@ -25,7 +25,10 @@ public class ScoreActivity extends AppCompatActivity {
         final int correct = getIntent().getIntExtra(INTENT_EXTRA_CORRECT, -1);
         final int expressionCount = getIntent().getIntExtra(INTENT_EXTRA_EXPRESSIONS_COUNT, -1);
         final String correctText = String.format(Locale.GERMANY, "%d / %d", correct, expressionCount);
-        final String percent = String.format(Locale.GERMANY, "%d%%", (correct * 100) / expressionCount);
+        final String percent = expressionCount != 0 ?
+                String.format(Locale.GERMANY, "%d%%", (correct * 100) / expressionCount) :
+                "n.a.";
+
         final int score = (correct - (int) Math.ceil(0.5 * (expressionCount - correct))) * (int) Math.pow(10, n);
         final int bestToday = -1;
         final int best = -1;

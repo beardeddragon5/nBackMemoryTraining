@@ -14,10 +14,10 @@ import de.matthias_ramsauer.fh.n_backmemorytraining.util.NBackPreferences;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
-    private String n;
-    private String endCondition;
-    private String timeLimit;
-    private String expressionLimit;
+    private String n = null;
+    private String endCondition = null;
+    private String timeLimit = null;
+    private String expressionLimit = null;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -55,7 +55,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         timeLimitPref.setOnPreferenceChangeListener((preference, newValue) -> {
             timeLimit = (String) newValue;
-            return true;
+            return timeLimit.matches("(\\d\\d:)?(\\d\\d:\\d\\d)");
         });
 
         expressionLimitPref.setOnPreferenceChangeListener((preference, newValue) -> {

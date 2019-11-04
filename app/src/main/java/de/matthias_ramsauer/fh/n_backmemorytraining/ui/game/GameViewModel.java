@@ -17,12 +17,13 @@ public class GameViewModel extends ViewModel implements Serializable {
     public int n = -1;
     public NBackPreferences.EndCondition endCondition;
     public int expressionLimit = -1;
-    public String timeLimit = null;
+    public long timeLimit = -1;
 
     // Game State
     public int correct;
     public final List<Expression> expressions = new ArrayList<>(10);
     public int selected = -1;
+    public long remainingTime;
 
     @Nullable
     public Expression getExpression() {
