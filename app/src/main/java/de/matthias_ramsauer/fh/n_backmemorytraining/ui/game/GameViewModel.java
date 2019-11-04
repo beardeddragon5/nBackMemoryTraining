@@ -21,6 +21,7 @@ public class GameViewModel extends ViewModel implements Serializable {
 
     // Game State
     public int correct;
+    public int answeredExpressionCount = 0;
     public final List<Expression> expressions = new ArrayList<>(10);
     public int selected = -1;
     public long remainingTime;

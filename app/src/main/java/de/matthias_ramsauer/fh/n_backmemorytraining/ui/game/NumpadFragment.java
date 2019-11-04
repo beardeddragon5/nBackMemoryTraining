@@ -69,6 +69,8 @@ public class NumpadFragment extends Fragment implements Animator.AnimatorListene
 
         assert this.mViewModel.getNBackExpression() != null;
 
+        mViewModel.answeredExpressionCount++;
+
         if (this.mViewModel.getNBackExpression().result == pressed) {
             startAnimation(view, R.color.correct, this);
             mViewModel.correct++;

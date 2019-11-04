@@ -122,7 +122,7 @@ public class GameActivity extends AppCompatActivity {
                 public void onFinish() {
                     final Intent i = new Intent(GameActivity.this, ScoreActivity.class);
                     i.putExtra(ScoreActivity.INTENT_EXTRA_CORRECT, viewModel.correct);
-                    i.putExtra(ScoreActivity.INTENT_EXTRA_EXPRESSIONS_COUNT, Math.max(viewModel.expressions.size() - viewModel.n, 0));
+                    i.putExtra(ScoreActivity.INTENT_EXTRA_EXPRESSIONS_COUNT, viewModel.answeredExpressionCount);
                     startActivity(i);
                 }
             };
@@ -150,7 +150,7 @@ public class GameActivity extends AppCompatActivity {
                 viewModel.expressionLimit == viewModel.expressions.size() - viewModel.n) {
             final Intent i = new Intent(this, ScoreActivity.class);
             i.putExtra(ScoreActivity.INTENT_EXTRA_CORRECT, viewModel.correct);
-            i.putExtra(ScoreActivity.INTENT_EXTRA_EXPRESSIONS_COUNT, viewModel.expressionLimit);
+            i.putExtra(ScoreActivity.INTENT_EXTRA_EXPRESSIONS_COUNT, viewModel.answeredExpressionCount);
             startActivity(i);
             return;
         }
