@@ -15,12 +15,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.toolbar));
     }
 
-    public void onClickConfig(View view) {
+    public void onClickConfig(@SuppressWarnings("unused") View view) {
         final Intent i = new Intent(this, ConfigActivity.class);
         startActivity(i);
     }
 
-    public void onClickStart(View view) {
+    public void onClickStart(@SuppressWarnings("unused") View view) {
         final Intent i = new Intent(this, GameActivity.class);
         startActivity(i);
     }

@@ -1,5 +1,6 @@
 package de.matthias_ramsauer.fh.n_backmemorytraining.ui.game;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -31,14 +32,26 @@ public class GameFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(getActivity()).get(GameViewModel.class);
+        final FragmentActivity activity = getActivity();
+
+        assert activity != null;
+
+        mViewModel = ViewModelProviders.of(activity).get(GameViewModel.class);
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        final TextView expressionView = ((TextView)getView().findViewById(R.id.game_expression));
+        assert mViewModel != null;
+        if (!mViewModel.isInitialized()) {
+            return;
+        }
+
+        final View view = getView();
+        assert view != null;
+
+        final TextView expressionView = view.findViewById(R.id.game_expression);
 
         if (mViewModel.endCondition == NBackPreferences.EndCondition.expression && mViewModel.expressions.size() > mViewModel.expressionLimit) {
             expressionView.setText("");

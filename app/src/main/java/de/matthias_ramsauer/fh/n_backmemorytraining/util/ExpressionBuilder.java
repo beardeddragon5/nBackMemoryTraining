@@ -1,10 +1,8 @@
 package de.matthias_ramsauer.fh.n_backmemorytraining.util;
 
-import java.util.function.Supplier;
-
 public class ExpressionBuilder {
 
-    public static char[] symbols = {'+', '-'};
+    private static final char[] symbols = {'+', '-'};
 
     public static Expression expression(IntSupplier random) {
         final IntSupplier absRandom = () -> Math.abs(random.get()) % 9 + 1;

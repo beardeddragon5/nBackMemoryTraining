@@ -3,8 +3,10 @@ package de.matthias_ramsauer.fh.n_backmemorytraining.util;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.util.Locale;
 import java.util.Objects;
 
+@SuppressWarnings("WeakerAccess")
 public class Expression implements Serializable {
 
     public final int first;
@@ -37,6 +39,6 @@ public class Expression implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return String.format("%d %c %d", first, symbol, second);
+        return String.format(Locale.GERMANY, "%d %c %d", first, symbol, second);
     }
 }

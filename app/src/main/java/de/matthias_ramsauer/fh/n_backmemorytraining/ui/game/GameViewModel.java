@@ -3,10 +3,8 @@ package de.matthias_ramsauer.fh.n_backmemorytraining.ui.game;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModel;
-import androidx.preference.PreferenceManager;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class GameViewModel extends ViewModel implements Serializable {
 
     // Game State
     public int correct;
-    public List<Expression> expressions = new ArrayList<>(10);
+    public final List<Expression> expressions = new ArrayList<>(10);
     public int selected = -1;
 
     @Nullable
@@ -42,11 +40,13 @@ public class GameViewModel extends ViewModel implements Serializable {
         return expressions.get(expressions.size() - n - 1);
     }
 
-    public boolean isInitalized() {
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    public boolean isInitialized() {
         return expressions.size() != 0;
     }
 
     @Override
+    @NonNull
     public String toString() {
         return "GameViewModel{" +
                 "n=" + n +

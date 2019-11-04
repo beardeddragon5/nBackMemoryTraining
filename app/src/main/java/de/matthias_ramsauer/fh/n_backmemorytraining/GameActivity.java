@@ -5,14 +5,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.widget.TextView;
 
+import java.util.Locale;
 import java.util.Random;
 
 import de.matthias_ramsauer.fh.n_backmemorytraining.ui.game.GameFragment;
@@ -26,7 +25,7 @@ import de.matthias_ramsauer.fh.n_backmemorytraining.util.NBackPreferences;
 
 public class GameActivity extends AppCompatActivity {
 
-    public static IntSupplier random = new Random()::nextInt;
+    private static final IntSupplier random = new Random()::nextInt;
 
     private GameViewModel viewModel;
 
@@ -44,7 +43,7 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
-        if (!viewModel.isInitalized()) {
+        if (!viewModel.isInitialized()) {
             final Expression expression = ExpressionBuilder.expression(random);
             viewModel.expressions.add(expression);
 
@@ -56,8 +55,8 @@ public class GameActivity extends AppCompatActivity {
 
         final TextView stateIndicator = findViewById(R.id.current_state);
         final TextView nIndicator = findViewById(R.id.game_n);
-        stateIndicator.setText(String.format("%d / %d", viewModel.expressions.size(), viewModel.expressionLimit + viewModel.n));
-        nIndicator.setText(String.format("n = %d", viewModel.n));
+        stateIndicator.setText(String.format(Locale.GERMANY, "%d / %d", viewModel.expressions.size(), viewModel.expressionLimit + viewModel.n));
+        nIndicator.setText(String.format(Locale.GERMANY, "n = %d", viewModel.n));
 
         getSupportFragmentManager().beginTransaction()
                 .disallowAddToBackStack()
@@ -95,9 +94,10 @@ public class GameActivity extends AppCompatActivity {
                 }
                 break;
             case time:
-                throw new UnsupportedOperationException("endcondition not implemented");
+                // TODO add time
+                throw new UnsupportedOperationException("end condition not implemented");
             default:
-                throw new UnsupportedOperationException("endcondition not implemented");
+                throw new UnsupportedOperationException("end condition not implemented");
         }
 
         final Expression expression = ExpressionBuilder.expression(random);

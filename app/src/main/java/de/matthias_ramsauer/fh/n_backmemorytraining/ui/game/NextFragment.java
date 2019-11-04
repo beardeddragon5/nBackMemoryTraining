@@ -1,12 +1,8 @@
 package de.matthias_ramsauer.fh.n_backmemorytraining.ui.game;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +13,6 @@ import de.matthias_ramsauer.fh.n_backmemorytraining.R;
 
 public class NextFragment extends Fragment {
 
-    private GameViewModel mViewModel;
 
     public NextFragment() {
     }
@@ -31,14 +26,9 @@ public class NextFragment extends Fragment {
         return out;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(getActivity()).get(GameViewModel.class);
-    }
-
-    public void onNextClick(View view) {
+    private void onNextClick(@SuppressWarnings("unused") View view) {
         final GameActivity activity = (GameActivity) getActivity();
+        assert activity != null;
         activity.onNextExpression();
     }
 }

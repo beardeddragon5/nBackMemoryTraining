@@ -4,7 +4,9 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.InputType;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import de.matthias_ramsauer.fh.n_backmemorytraining.R;
@@ -27,43 +29,55 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         final String timeLimitKey = res.getString(R.string.pref_time_limit_key);
         final String expressionLimitKey = res.getString(R.string.pref_expression_limit_key);
 
-        setPreferenceInputType(nKey, InputType.TYPE_CLASS_NUMBER);
-        setPreferenceInputType(timeLimitKey, InputType.TYPE_CLASS_DATETIME | InputType.TYPE_DATETIME_VARIATION_TIME);
-        setPreferenceInputType(expressionLimitKey, InputType.TYPE_CLASS_NUMBER);
+        final Preference nPref = findPreference(nKey);
+        final Preference endConditionPref = findPreference(endConditionKey);
+        final Preference timeLimitPref = findPreference(timeLimitKey);
+        final Preference expressionLimitPref = findPreference(expressionLimitKey);
 
-        findPreference(nKey).setOnPreferenceChangeListener((preference, newValue) -> {
+        assert nPref != null;
+        assert endConditionPref != null;
+        assert timeLimitPref != null;
+        assert expressionLimitPref != null;
+
+        setPreferenceInputType((EditTextPreference) nPref, InputType.TYPE_CLASS_NUMBER);
+        setPreferenceInputType((EditTextPreference) timeLimitPref, InputType.TYPE_CLASS_DATETIME | InputType.TYPE_DATETIME_VARIATION_TIME);
+        setPreferenceInputType((EditTextPreference) expressionLimitPref, InputType.TYPE_CLASS_NUMBER);
+
+        nPref.setOnPreferenceChangeListener((preference, newValue) -> {
             n = (String) newValue;
             return true;
         });
 
-        findPreference(endConditionKey).setOnPreferenceChangeListener((preference, newValue) -> {
+        endConditionPref.setOnPreferenceChangeListener((preference, newValue) -> {
             endCondition = (String) newValue;
             return true;
         });
 
-        findPreference(timeLimitKey).setOnPreferenceChangeListener((preference, newValue) -> {
+        timeLimitPref.setOnPreferenceChangeListener((preference, newValue) -> {
             timeLimit = (String) newValue;
             return true;
         });
 
-        findPreference(expressionLimitKey).setOnPreferenceChangeListener((preference, newValue) -> {
+        expressionLimitPref.setOnPreferenceChangeListener((preference, newValue) -> {
             expressionLimit = (String) newValue;
             return true;
         });
 
-        findPreference(nKey).setPersistent(false);
-        findPreference(endConditionKey).setPersistent(false);
-        findPreference(timeLimitKey).setPersistent(false);
-        findPreference(expressionLimitKey).setPersistent(false);
+        nPref.setPersistent(false);
+        endConditionPref.setPersistent(false);
+        timeLimitPref.setPersistent(false);
+        expressionLimitPref.setPersistent(false);
     }
 
     public boolean save() {
-        return NBackPreferences.setPreferences(getActivity(), n, endCondition, timeLimit, expressionLimit);
+        final FragmentActivity activity = getActivity();
+        assert activity != null;
+
+        return NBackPreferences.setPreferences(activity, n, endCondition, timeLimit, expressionLimit);
     }
 
 
-    public void setPreferenceInputType(final CharSequence key, final int inputType) {
-        final EditTextPreference pref = findPreference(key);
+    private void setPreferenceInputType(EditTextPreference pref, final int inputType) {
         pref.setOnBindEditTextListener(editText -> editText.setInputType(inputType));
     }
 

@@ -13,7 +13,7 @@ public class NBackPreferences {
     public enum EndCondition {
         expression,
         time
-    };
+    }
 
     public static boolean setPreferences(@NonNull Context context, String n, String endCondition, String timeLimit, String expressionLimit) {
         final Resources res = context.getResources();
@@ -31,11 +31,11 @@ public class NBackPreferences {
                 .commit();
     }
 
-    public static int getIntPreference(@NonNull Context context, int prefKeyID, String defValue) {
+    private static int getIntPreference(@NonNull Context context, int prefKeyID, String defValue) {
         return Integer.parseInt(getStringPreference(context, prefKeyID, defValue));
     }
 
-    public static String getStringPreference(@NonNull Context context, int prefKeyID, String defValue) {
+    private static String getStringPreference(@NonNull Context context, int prefKeyID, String defValue) {
         final Resources res = context.getResources();
         final String key = res.getString(prefKeyID);
         return PreferenceManager.getDefaultSharedPreferences(context).getString(key, defValue);

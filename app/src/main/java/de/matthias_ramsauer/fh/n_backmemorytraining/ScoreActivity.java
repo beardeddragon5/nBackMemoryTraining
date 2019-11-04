@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 import de.matthias_ramsauer.fh.n_backmemorytraining.util.NBackPreferences;
 
 public class ScoreActivity extends AppCompatActivity {
@@ -22,8 +24,8 @@ public class ScoreActivity extends AppCompatActivity {
         final int n = NBackPreferences.getN(this);
         final int correct = getIntent().getIntExtra(INTENT_EXTRA_CORRECT, -1);
         final int expressionCount = getIntent().getIntExtra(INTENT_EXTRA_EXPRESSIONS_COUNT, -1);
-        final String correctText = String.format("%d / %d", correct, expressionCount);
-        final String percent = String.format("%d%%", (correct * 100) / expressionCount);
+        final String correctText = String.format(Locale.GERMANY, "%d / %d", correct, expressionCount);
+        final String percent = String.format(Locale.GERMANY, "%d%%", (correct * 100) / expressionCount);
         final int score = (correct - (int) Math.ceil(0.5 * (expressionCount - correct))) * (int) Math.pow(10, n);
         final int bestToday = -1;
         final int best = -1;
@@ -36,12 +38,12 @@ public class ScoreActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.score_best)).setText(String.valueOf(best));
     }
 
-    public void onClickReplay(View view) {
+    public void onClickReplay(@SuppressWarnings("unused") View view) {
         final Intent i = new Intent(this, GameActivity.class);
         startActivity(i);
     }
 
-    public void onClickMenu(View view) {
+    public void onClickMenu(@SuppressWarnings("unused") View view) {
         super.onBackPressed();
     }
 }

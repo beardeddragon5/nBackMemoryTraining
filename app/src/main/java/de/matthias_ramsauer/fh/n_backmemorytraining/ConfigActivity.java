@@ -2,12 +2,8 @@ package de.matthias_ramsauer.fh.n_backmemorytraining;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NavUtils;
-import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +21,9 @@ public class ConfigActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
         setSupportActionBar(findViewById(R.id.toolbar));
+
+        assert getSupportActionBar() != null;
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         reloadSettings();
