@@ -122,7 +122,7 @@ public class GameActivity extends AppCompatActivity {
                 public void onFinish() {
                     final Intent i = new Intent(GameActivity.this, ScoreActivity.class);
                     i.putExtra(ScoreActivity.INTENT_EXTRA_CORRECT, viewModel.correct);
-                    i.putExtra(ScoreActivity.INTENT_EXTRA_EXPRESSIONS_COUNT, viewModel.expressions.size() - 1);
+                    i.putExtra(ScoreActivity.INTENT_EXTRA_EXPRESSIONS_COUNT, viewModel.expressions.size() - viewModel.n);
                     startActivity(i);
                 }
             };
