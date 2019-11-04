@@ -1,0 +1,12 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="end_condition_entries">
+        <item>@string/pref_end_condition_expression</item>
+        <item>@string/pref_end_condition_time</item>
+    </string-array>
+
+    <string-array name="end_condition_values">
+        <item>expression</item>
+        <item>time</item>
+    </string-array>
+</resources>

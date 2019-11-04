@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">n-Back Memory Training</string>
+    <string name="main_start">Starten</string>
+    <string name="main_config">Konfigurieren</string>
+    <string name="main_stats">Statistiken</string>
+
+    <string name="config_title">Konfiguration</string>
+    <string name="config_item_revert_changes">Rückgängig</string>
+    <string name="config_item_save">Speichern</string>
+    <string name="config_item_reset_to_default">Zurücksetzen auf Standard</string>
+
+    <string name="game_back_dialog_title">Zum Hauptmenü zurückkehren</string>
+    <string name="game_back_dialog_yes">Ja</string>
+    <string name="game_back_dialog_no">Nein</string>
+    <string name="game_next">Nächste</string>
+
+    <string name="numpad_one">1</string>
+    <string name="numpad_two">2</string>
+    <string name="numpad_three">3</string>
+    <string name="numpad_four">4</string>
+    <string name="numpad_five">5</string>
+    <string name="numpad_six">6</string>
+    <string name="numpad_seven">7</string>
+    <string name="numpad_eight">8</string>
+    <string name="numpad_nine">9</string>
+
+    <string name="score_label_n">n:</string>
+    <string name="score_label_correct">Korrekt:</string>
+    <string name="score_label_percent">Anteil:</string>
+    <string name="score_label_score">Score:</string>
+    <string name="score_label_best_today">Bestes Heute:</string>
+    <string name="score_label_best">Bestes Gesamt:</string>
+    <string name="score_replay">Nochmal</string>
+    <string name="score_menu">Menü</string>
+
+    <string name="toast_saved">Gespeichert</string>
+    <string name="toast_save_failed">Speichern fehlgeschlagen</string>
+    <string name="toast_reset_to_default">Einstellungen zurückgesetzt</string>
+    <string name="toast_revert_changes">Änderungen verworfen</string>
+
+    <string name="pref_n_key">n</string>
+    <string name="pref_n_title">Antwortversatz</string>
+
+    <string name="pref_end_condition_key">end_condition</string>
+    <string name="pref_end_condition_title">Endbedingung</string>
+    <string name="pref_end_condition_expression">Ausdruck</string>
+    <string name="pref_end_condition_time">Zeit</string>
+
+    <string name="pref_time_limit_key">time_limit</string>
+    <string name="pref_time_limit_title">Zeitlimit</string>
+
+    <string name="pref_expression_limit_key">expression_limit</string>
+    <string name="pref_expression_limit_title">Ausdruckslimit</string>
+
+
+    <string name="placeholder_state">1/5</string>
+    <string name="placeholder_expression">1 + 5</string>
+</resources>

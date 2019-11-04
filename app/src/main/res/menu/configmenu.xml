@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemSave"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/config_item_save"
+        android:enabled="true"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/itemRevertChanges"
+        android:icon="@android:drawable/ic_menu_revert"
+        android:title="@string/config_item_revert_changes"
+        android:enabled="true"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/itemResetToDefault"
+        android:icon="@android:drawable/ic_menu_rotate"
+        android:title="@string/config_item_reset_to_default"
+        android:enabled="true"
+        app:showAsAction="ifRoom" />
+
+</menu>
