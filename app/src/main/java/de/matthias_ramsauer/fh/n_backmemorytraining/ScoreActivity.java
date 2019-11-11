@@ -8,7 +8,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.Locale;
+import java.util.concurrent.Executors;
 
+import de.matthias_ramsauer.fh.n_backmemorytraining.db.StatsDatabase;
+import de.matthias_ramsauer.fh.n_backmemorytraining.util.DatabaseExecutor;
 import de.matthias_ramsauer.fh.n_backmemorytraining.util.NBackPreferences;
 
 public class ScoreActivity extends AppCompatActivity {
@@ -30,15 +33,29 @@ public class ScoreActivity extends AppCompatActivity {
                 "n.a.";
 
         final int score = (correct - (int) Math.ceil(0.5 * (expressionCount - correct))) * (int) Math.pow(10, n);
-        final int bestToday = -1;
-        final int best = -1;
+        final TextView bestScoreToday = findViewById(R.id.score_best_today);
+        final TextView bestScore = findViewById(R.id.score_best);
+
+        bestScoreToday.setText("...");
+        bestScore.setText("...");
+
+        DatabaseExecutor.getInstance().execute(() -> {
+            final StatsDatabase db = StatsDatabase.getInstance(this);
+
+            db.statsDao().addStats(n, expressionCount, score);
+
+            final int bestToday = db.statsDao().getTodaysBestScore();
+            final int best = db.statsDao().getBestScore();
+
+            bestScoreToday.setText(String.valueOf(bestToday));
+            bestScore.setText(String.valueOf(best));
+        });
 
         ((TextView) findViewById(R.id.score_n)).setText(String.valueOf(n));
         ((TextView) findViewById(R.id.score_correct)).setText(correctText);
         ((TextView) findViewById(R.id.score_percent)).setText(percent);
         ((TextView) findViewById(R.id.score_score)).setText(String.valueOf(score));
-        ((TextView) findViewById(R.id.score_best_today)).setText(String.valueOf(bestToday));
-        ((TextView) findViewById(R.id.score_best)).setText(String.valueOf(best));
+
     }
 
     public void onClickReplay(@SuppressWarnings("unused") View view) {
