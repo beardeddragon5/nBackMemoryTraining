@@ -32,7 +32,7 @@ public class ScoreActivity extends AppCompatActivity {
                 String.format(Locale.GERMANY, "%d%%", (correct * 100) / expressionCount) :
                 "n.a.";
 
-        final int score = (correct - (int) Math.ceil(0.5 * (expressionCount - correct))) * (int) Math.pow(10, n);
+        final int score = (int) Math.ceil(((double) correct / expressionCount) * expressionCount * Math.pow(10, n));
         final TextView bestScoreToday = findViewById(R.id.score_best_today);
         final TextView bestScore = findViewById(R.id.score_best);
 
