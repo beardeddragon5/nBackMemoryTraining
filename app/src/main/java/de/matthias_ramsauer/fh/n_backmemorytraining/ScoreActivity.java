@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.Executors;
 
@@ -42,7 +43,7 @@ public class ScoreActivity extends AppCompatActivity {
         DatabaseExecutor.getInstance().execute(() -> {
             final StatsDatabase db = StatsDatabase.getInstance(this);
 
-            db.statsDao().addStats(n, expressionCount, score);
+            db.statsDao().addStats(n, expressionCount, score, new Date());
 
             final int bestToday = db.statsDao().getTodaysBestScore();
             final int best = db.statsDao().getBestScore();

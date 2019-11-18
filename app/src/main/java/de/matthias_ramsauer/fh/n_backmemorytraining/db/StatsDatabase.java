@@ -2,14 +2,10 @@ package de.matthias_ramsauer.fh.n_backmemorytraining.db;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
-import androidx.sqlite.db.SupportSQLiteDatabase;
-
-import java.util.concurrent.Executor;
 
 import de.matthias_ramsauer.fh.n_backmemorytraining.db.converter.DateConverter;
 
@@ -36,7 +32,6 @@ public abstract class StatsDatabase extends RoomDatabase {
 
     private static StatsDatabase buildDatabase(final Context appContext) {
         return Room.databaseBuilder(appContext, StatsDatabase.class, DATABASE_NAME)
-                // .addMigrations(MIGRATION_1_2)
                 .build();
     }
 }

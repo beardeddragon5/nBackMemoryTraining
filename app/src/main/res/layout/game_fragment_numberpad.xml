@@ -6,12 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/numpad_one"
+        style="@style/Widget.MaterialComponents.Button.Numpad"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="@color/neutral"
-        android:backgroundTintMode="src_in"
         android:tag="1"
         android:text="@string/numpad_one"
         app:autoSizeTextType="uniform"
@@ -20,118 +19,108 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.Numpad"
         android:id="@+id/numpad_two"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="@color/neutral"
-        android:backgroundTintMode="src_in"
         android:tag="2"
         android:text="@string/numpad_two"
+        app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@id/numpad_five"
         app:layout_constraintEnd_toStartOf="@id/numpad_three"
         app:layout_constraintStart_toEndOf="@id/numpad_one"
-        app:layout_constraintTop_toTopOf="parent"
-        app:autoSizeTextType="uniform"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.Numpad"
         android:id="@+id/numpad_three"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="@color/neutral"
-        android:backgroundTintMode="src_in"
         android:tag="3"
         android:text="@string/numpad_three"
+        app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@id/numpad_six"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/numpad_two"
-        app:layout_constraintTop_toTopOf="parent"
-        app:autoSizeTextType="uniform"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.Numpad"
         android:id="@+id/numpad_four"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="@color/neutral"
-        android:backgroundTintMode="src_in"
         android:tag="4"
         android:text="@string/numpad_four"
+        app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@id/numpad_seven"
         app:layout_constraintEnd_toStartOf="@id/numpad_five"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/numpad_one"
-        app:autoSizeTextType="uniform"/>
+        app:layout_constraintTop_toBottomOf="@id/numpad_one"/>
 
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.Numpad"
         android:id="@+id/numpad_five"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="@color/neutral"
-        android:backgroundTintMode="src_in"
         android:tag="5"
         android:text="@string/numpad_five"
+        app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@id/numpad_eight"
         app:layout_constraintEnd_toStartOf="@id/numpad_six"
         app:layout_constraintStart_toEndOf="@id/numpad_four"
-        app:layout_constraintTop_toBottomOf="@id/numpad_two"
-        app:autoSizeTextType="uniform"/>
+        app:layout_constraintTop_toBottomOf="@id/numpad_two" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.Numpad"
         android:id="@+id/numpad_six"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="@color/neutral"
-        android:backgroundTintMode="src_in"
         android:tag="6"
         android:text="@string/numpad_six"
+        app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@id/numpad_nine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/numpad_five"
-        app:layout_constraintTop_toBottomOf="@id/numpad_three"
-        app:autoSizeTextType="uniform"/>
+        app:layout_constraintTop_toBottomOf="@id/numpad_three"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.Numpad"
         android:id="@+id/numpad_seven"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="@color/neutral"
-        android:backgroundTintMode="src_in"
         android:tag="7"
         android:text="@string/numpad_seven"
+        app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/numpad_eight"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/numpad_four"
-        app:autoSizeTextType="uniform"
-        android:layout_weight="3"/>
+        app:layout_constraintTop_toBottomOf="@id/numpad_four" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.Numpad"
         android:id="@+id/numpad_eight"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="@color/neutral"
-        android:backgroundTintMode="src_in"
         android:tag="8"
         android:text="@string/numpad_eight"
+        app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/numpad_nine"
         app:layout_constraintStart_toEndOf="@id/numpad_seven"
-        app:layout_constraintTop_toBottomOf="@id/numpad_five"
-        app:autoSizeTextType="uniform"
-        android:layout_weight="3"/>
+        app:layout_constraintTop_toBottomOf="@id/numpad_five" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.Numpad"
         android:id="@+id/numpad_nine"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="@color/neutral"
-        android:backgroundTintMode="src_in"
         android:tag="9"
         android:text="@string/numpad_nine"
+        app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/numpad_eight"
-        app:layout_constraintTop_toBottomOf="@id/numpad_six"
-        app:autoSizeTextType="uniform" />
+        app:layout_constraintTop_toBottomOf="@id/numpad_six" />
 </androidx.constraintlayout.widget.ConstraintLayout>

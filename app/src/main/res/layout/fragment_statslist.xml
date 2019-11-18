@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/list_item_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:textAppearance="?attr/textAppearanceListItem"
+        app:layout_constraintEnd_toStartOf="@id/list_item_score"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/list_item_n_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stats_list_n"
+        android:textAppearance="?attr/textAppearanceListItemSecondary"
+        android:paddingEnd="5dp"
+        android:labelFor="@id/list_item_n"
+        app:layout_constraintStart_toStartOf="@id/list_item_date"
+        app:layout_constraintTop_toBottomOf="@id/list_item_date" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/list_item_n"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceListItemSecondary"
+        app:layout_constraintEnd_toStartOf="@id/list_item_score"
+        app:layout_constraintStart_toEndOf="@id/list_item_n_label"
+        app:layout_constraintTop_toBottomOf="@id/list_item_date" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/list_item_score"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/text_margin"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

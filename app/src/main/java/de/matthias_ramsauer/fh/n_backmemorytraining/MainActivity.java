@@ -24,4 +24,9 @@ public class MainActivity extends AppCompatActivity {
         final Intent i = new Intent(this, GameActivity.class);
         startActivity(i);
     }
+
+    public void onClickStats(@SuppressWarnings("unused") View view) {
+        final Intent i = new Intent(this, StatsActivity.class);
+        startActivity(i);
+    }
 }

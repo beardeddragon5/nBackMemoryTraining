@@ -20,6 +20,6 @@ public class Stats {
     @ColumnInfo(index = true)
     public int score;
 
-    @ColumnInfo(defaultValue = "CURRENT_TIMESTAMP", index = true)
+    @ColumnInfo(index = true)
     public Date date;
 }
