@@ -76,9 +76,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         return NBackPreferences.setPreferences(activity, n, endCondition, timeLimit, expressionLimit);
     }
 
-
     private void setPreferenceInputType(EditTextPreference pref, final int inputType) {
-        pref.setOnBindEditTextListener(editText -> editText.setInputType(inputType));
+        pref.setOnBindEditTextListener(editText -> {
+            editText.setInputType(inputType);
+            editText.selectAll();
+        });
     }
 
 }

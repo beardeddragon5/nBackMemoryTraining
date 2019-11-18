@@ -14,36 +14,38 @@
   ~ limitations under the License.
   -->
 
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <EditTextPreference
-        app:key="@string/pref_n_key"
-        app:title="@string/pref_n_title"
-        app:defaultValue="1"
-        app:persistent="true"
-        app:useSimpleSummaryProvider="true" />
+    <PreferenceCategory android:title="@string/game_configuration">
+        <EditTextPreference
+            app:key="@string/pref_n_key"
+            app:title="@string/pref_n_title"
+            app:defaultValue="1"
+            app:persistent="true"
+            app:useSimpleSummaryProvider="true" />
 
-    <ListPreference
-        app:key="@string/pref_end_condition_key"
-        app:title="@string/pref_end_condition_title"
-        app:defaultValue="expression"
-        app:entries="@array/end_condition_entries"
-        app:entryValues="@array/end_condition_values"
-        app:persistent="true"
-        app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            app:key="@string/pref_end_condition_key"
+            app:title="@string/pref_end_condition_title"
+            app:defaultValue="expression"
+            app:entries="@array/end_condition_entries"
+            app:entryValues="@array/end_condition_values"
+            app:persistent="true"
+            app:useSimpleSummaryProvider="true" />
 
-    <EditTextPreference
-        app:key="@string/pref_time_limit_key"
-        app:title="@string/pref_time_limit_title"
-        app:defaultValue="01:30"
-        app:persistent="true"
-        app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            app:key="@string/pref_time_limit_key"
+            app:title="@string/pref_time_limit_title"
+            app:defaultValue="01:30"
+            app:persistent="true"
+            app:useSimpleSummaryProvider="true" />
 
-    <EditTextPreference
-        app:key="@string/pref_expression_limit_key"
-        app:title="@string/pref_expression_limit_title"
-        app:defaultValue="10"
-        app:persistent="true"
-        app:useSimpleSummaryProvider="true" />
-
+        <EditTextPreference
+            app:key="@string/pref_expression_limit_key"
+            app:title="@string/pref_expression_limit_title"
+            app:defaultValue="10"
+            app:persistent="true"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
 </PreferenceScreen>
