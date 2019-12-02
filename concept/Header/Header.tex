@@ -1,0 +1,145 @@
+% !TEX root = ../Masterdatei.tex
+%HEADER
+
+%<---!!!!!!!!!!!!!!! MAKRO-DEFIONITIONEN; BITTE NICHT VERAENDERN !!!!!!!!!!
+%<--- ARBEIT EINSEITIG
+\def\makroEinseitig{
+  %KOMA-Script-Klasse: scrreprt
+  %deutsches Design, Schriftgröße 12, DIN A4
+  %Literaturverzeichnis und Index in Inhaltsverzerzeichnis einbinden
+  \documentclass[12pt,a4paper,listof=totoc,oneside]{scrreprt}
+  %Seitenspiegel einstellen
+  \usepackage[a4paper]{geometry}
+  \geometry{a4paper,left=30mm,right=25mm,
+  bottom=20mm,top=15mm,bindingoffset=2mm,
+  includehead,includefoot}
+}
+% ARBEIT EINSEITIG --->
+
+\def\makroZweiseitig{
+  %<--- ARBEIT ZWEISEITIG
+  %KOMA-Script-Klasse: scrreprt
+  %deutsches Design, zweiseitig
+  %Literaturverzeichnis und Index in Inhaltsverzerzeichnis einbinden
+  \documentclass[12pt,a4paper,listof=totoc,twoside, headsepline]{scrreprt}
+  \usepackage[a4paper]{geometry}
+  \geometry{a4paper,left=25mm,right=25mm,
+  bottom=20mm,top=15mm,bindingoffset=2mm,
+  includehead,includefoot}
+}
+% ARBEIT ZWEISEITIG --->
+\def\Article{
+  \documentclass[12pt,a4paper,listof=totoc,twoside, headsepline, notitlepage]{scrartcl}
+  \usepackage[a4paper]{geometry}
+  \geometry{a4paper,left=25mm,right=25mm,
+  bottom=20mm,top=15mm,bindingoffset=2mm,
+  includehead,includefoot}
+}
+
+%<--- Einstellungen Kopfzeile
+\def\makroFH-Kopfzeilenstil{
+  \pagestyle{scrheadings}
+  \setheadsepline{0.4pt}
+  \pagestyle{scrheadings}
+  \renewcommand*{\chapterpagestyle}{scrheadings}
+}
+%Einstellungen Kopfzeile --->
+%!!!!!!!!!!!!!!! MAKRO-DEFIONITIONEN; BITTE NICHT VERAENDERN !!!!!!!!!!--->
+
+
+%AUSWAHL: TEXT EINSEITIG (ja/nein)
+\Article
+%\makroZweiseitig
+
+%schalte Umlaute frei
+\usepackage[ngerman]{babel}
+%passende Codierung
+\usepackage[utf8]{inputenc}
+%Seitenspiegel einzustellen
+\usepackage[a4paper]{geometry}
+%Mathepaket
+\usepackage{amsmath}
+%Symbole
+\usepackage{amssymb}
+%griechische Symbole
+\usepackage{upgreek}
+%weitere Symbole
+\usepackage{pxfonts}
+% Phonetischen Alphabete für LaTeX
+\usepackage{tipa}
+%farbige Schriften
+\usepackage{color}
+\usepackage{scrhack}
+%Bilder fixieren
+\usepackage{float}
+%Code formatierung
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+%Grafiken einbinden
+\usepackage{graphicx}
+\usepackage{wrapfig}
+% Kopf- und Fußzeilen
+\usepackage[automark]{scrlayer-scrpage}
+% deutsche Überschriften
+\usepackage[ngerman]{translator}
+% Kopfzeilenabstand festlegen
+\setlength{\headheight}{10mm}
+%Abb. statt Abbildung
+\usepackage{caption3}
+
+\usepackage[style=authoryear]{biblatex}
+% \bibliographystyle{dcu}
+\usepackage[babel,german=quotes]{csquotes}
+
+\usepackage{rotating}
+\usepackage[hidelinks]{hyperref}
+% \usepackage{sectsty}
+
+\usepackage{array}
+
+\addto\captionsngerman{
+\renewcommand{\figurename}{Abb.}
+\renewcommand{\tablename}{Tab.}
+}
+%Glossar-Pakage
+\usepackage[
+nonumberlist, %keine Seitenzahlen anzeigen
+acronym,      %ein Abkürzungsverzeichnis erstellen
+toc]          %Einträge im Inhaltsverzeichnis
+{glossaries}
+% \usepackage{cite}
+%Glossar einschalten
+% \makeglossaries
+
+\addbibresource{Bibliothek.bib}
+
+\definecolor{lightlightgray}{gray}{0.95}
+
+\setkomafont{section}{\color{SkyBlue}\scshape\rmfamily\bfseries\Large}
+\setkomafont{subsection}{\color{SkyBlue}\scshape\rmfamily\mdseries\large}
+\setkomafont{subsubsection}{\color{SkyBlue}\scshape\rmfamily\bfseries}
+\setkomafont{sectionentry}{\normalsize\bfseries}
+
+\lstdefinestyle{Common}
+{
+    basicstyle=\scriptsize\ttfamily\null,
+    numbers=left,
+    numbersep=1em,
+    frame=single,
+    framesep=\fboxsep,
+    framerule=\fboxrule,
+    xleftmargin=\dimexpr\fboxsep+\fboxrule,
+    xrightmargin=\dimexpr\fboxsep+\fboxrule,
+    breaklines=true,
+    breakindent=0pt,
+    tabsize=5,
+    columns=flexible,
+    showstringspaces=false,
+    backgroundcolor = \color{lightlightgray},
+    captionpos=b,% or t for top (default)
+    abovecaptionskip=0.5\smallskipamount,   % there is also belowcaptionskip
+}
+
+\input{Header/YAML}
+\input{Header/CSharp}
+\input{Header/JavaScript}

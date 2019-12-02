@@ -1,0 +1,40 @@
+%!TEX output_directory = out
+%!TEX aux_directory = out
+
+% Header beinhaltet Dokumentenklasse sowie includierte Packages
+\input{Header/Header}
+
+%Zeilenabstand * 1.25 (default)
+\renewcommand{\baselinestretch}{1.25}\normalsize
+%(Kommentar entfernen, um Zeilenabstand
+% auf 1,5-fache Groesse zu ueberschreiben)
+% \renewcommand{\baselinestretch}{1.50}\normalsize
+
+\title{\color{SkyBlue}\rmfamily\bfseries Gedächtnistraining mit n-back}
+\author{
+  Matthias Ramsauer\\
+  \small\texttt{nbackmemory@matthias-ramsauer.de}
+  \and
+  Andreas Fillinger\\
+  \small\texttt{s-afilin@haw-landshut.de}
+}
+\date{\today}
+
+\begin{document}
+  \maketitle
+
+  \tableofcontents
+
+  % \input{Glossar}
+  \include{Concept}
+  \include{Implementation}
+  % \nocite{*}
+
+  % \listoffigures
+  % \listoftables
+
+  % \printbibliography
+
+  % \printglossary[title=Glossar]
+  % \printglossary[type=\acronymtype,title={Abkürzungen}]
+\end{document}
