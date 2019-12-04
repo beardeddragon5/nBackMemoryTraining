@@ -1,10 +1,123 @@
 % !TEX root = ./Masterdatei.tex
 
 \section{Entwurf und Implementierung}
+Mit Abschluss der Konzeption wird nun der Anwendungsentwurf vorgestellt und über
+die Implementierung berichtet.
 
-\subsection{Activities}
+Es wird die MVVM-Architektur verwendet. Die Applikation wird in 4 größere
+Abschnitte unterteilt die möglichst voneinander getrennt sind und nur über
+Entsprechende Abstraktionsschichten miteinander Kommunizieren.
+\begin{itemize}[itemsep=0pt]
+\item Einstellungen
+\item Statistiken
+\item Spiel
+\item Datenbank
+\end{itemize}
+In diesen Abschnitten wird über Viewmodels bzw. Indents kommuniziert.
+ViewModels werden verwendet um zwischen Fragments einer Activity zu
+vermitteln während Intents im Kontext der Anwendung zum harten wechsel zwischen
+Programmabläufen verwendet wird.
 
-\subsection{Domänenobjekte}
+Die einzelnen Gui-Komponenten werden ausschließlich in XML-Format erstellt. Für
+die Befüllung mit entsprechenden Daten wurde wurde jedoch verzichten ein
+entsprechendes Templating Framework zu verwenden um nicht die Anwendung unnötig
+aufzublähen.
+
+Für die Anbindung wurde Room benutzt. Dabei handelt es sich um eine
+Abstraktionsschicht zu den Funktionen von SQLite. Mitunter wird damit auch
+die Migration von verschiedenen Version der Datenbank behandelt.
+
+Die Gui-Komponenten sind aus dem Material Design Componenten von Google
+entnommen worden.
+
+\subsection{Activities und Fragmente}
+In diesem Abschnitt werden die entsprechenden Activitys der Anwendung und
+die dazugehörigen Fragments genauer erläutert.
+
+\subsubsection{MainActivity}
+Die Main-Activity ist die einfachste Activity und dient nur als Hub um zwischen
+den Abschnitten zu wechseln.
+
+\subsubsection{ConfigActivity}
+Die \texttt{ConfigActivity} wird dafür verwendet um das SettingsFragment zu
+starten und die Toolbar Aktionen abzufangen. Die Aktionen und dazugehörigen
+Buttons werden in den Resourcen als \texttt{"menu/configmenu.xml"} hinterlegt.
+
+\paragraph{SettingsFragment}
+Dieses Fragment erbt von \texttt{PreferenceFragmentCompat}. Dies ist eine
+Klasse der neuen \texttt{androidx} Pakets für die Kompatibilität von älteren
+Android Versionen. Diese unterschiedent sich in verschiedenen Teilen
+unteranderem lässt sich hier der Datentyp der einzelenen Preferences nicht
+mehr im XML definieren. Deswegen muss dies hier unglücklicherweise
+programmatisch eingestellt werden. Um den Aufwand möglichst gering zu halten
+wird hier auch zunächst angegeben, dass die einzelnen Einstellungen persistet
+sind. Das führt dazu, dass die Werte aus den SharedPreferences gelesen werden.
+Programmatisch werden diese jedoch nach dem Aufbau der Gui als nicht
+persistent gekennzeichnet damit die Toolbar aktionen nicht umgangen werden.
+
+\subsubsection{GameActivity}
+In der GameActivity werden die Spielmodi \texttt{Time} und \texttt{Expression}
+implementiert. Dabei werden 3 verschiedene Fragmente benutzt um die verschiedenen
+Spielzustände darzustellen.
+
+\paragraph{GameFragment}
+Dieses Fragment zeigt die aktuelle Expression an. Außerdem gibt sie Informationen
+über die den Antwortversatz (n) und den aktuellen Stand je nach Spielmodi.
+
+\paragraph{NextFragement}
+Dieses Fragment enthält nur einen Button um entsprechend einen Zug weiter zu
+gehen. Es wird benötigt um die ersten Ausdrücke anzuzeigen die noch keine
+Antwort verlangen.
+
+\paragraph{NumpadFragment}
+Dieses Fragment zeigt ein Nummernfeld von 1-9 an und färbt sich entsprechend
+ein beim drücken auf eine Taste.
+
+\subsubsection{ScoreActivity}
+Die Score Activity wird zum Abschluss einer Übung gestartet und zeigt
+verschiedene Leistungsmerkmale über die Übung an. Unter anderem holt sie auch
+die Highscores aus der Datenbank.
+
+\subsubsection{StatsActivity}
+Die StatsActivity besteht aus einem Tabbed View Pager und beinhaltet nur die
+Initalisierung des Adapters.
+
+\paragraph{StatsListFragment}
+Dieses Fragment enthält eine Liste mit beliebige Anzahl an Elementen. Da das
+laden aller Elemente nach längerer Benutzung der App schwierig werden kann
+werden hierfür immer nur eine Gewisse Anzahl and Items geladen und angezeigt.
+Für diese Funktionaliät wird ein \texttt{PagedListAdapter} verwendet.
+
+\paragraph{StatsGraphFragment}
+Dieses Fragment enthält einen Graphen der die Statistiken visuell darstellt
+über den entsprechend ausgewählten Zeitabschnitt. Für die graphische
+Darstellung wurde die Bibiliothek \texttt{MPAndroidChart} benutzt.
 
 \subsection{Datenzugriffsschicht}
+Als Datenzugriffschicht wird Room verwendet. Room ermöglicht es mit wenig
+Aufwand eine entsprechende Datenbank mit Schemas zu befüllen. Für dieses
+Zweck wurden die 4 Klassen erstellt.
+
+\paragraph{Stats}
+Diese Klasse enthält das Datenbank-Modell und besteht nur aus einer
+Ansammlung von Eigenschaften mit Entsprechenden Annotations die man aus
+der Room Dokumentation entnehmen kann. Die Annotations geben die
+Spaltennamen, Indexe und andere Metainformationen wieder.
+
+\paragraph{StatsDao}
+Ist ein interface mit verschiedenen Methoden die jeweils mit einem
+SQL-Query annotiert sind. Dabei können die Parameter der Methode im Query
+verwendet werden.
+
+\paragraph{StatsDatabase}
+Diese Klasse erbt von \texttt{RoomDatabase} und enthält die Initalisierung
+der Datenbank und eine vorgegebene abstrakte Methode die ein \texttt{StatsDao}
+Objekt zurückgibt.
+
+\paragraph{DateConverter}
+Da Room mit Objekten der Klasse \texttt{java.util.Date} nicht arbeiten kann
+müssen sie entsprechend konvertiert werden. In diesem Fall zu \texttt{Long}
+als Unix Timestamp. Um den entsprechenden Konverter bekannt zu machen wird
+an \texttt{StatsDatabase} eine Annotation hinzugefügt mit der Klassenreferenz.
+
 
