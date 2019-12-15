@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.view.View;
 import android.os.Bundle;
 
+import de.matthias_ramsauer.fh.n_backmemorytraining.util.NBackPreferences;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -21,8 +23,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickStart(@SuppressWarnings("unused") View view) {
-        final Intent i = new Intent(this, GameActivity.class);
-        startActivity(i);
+        final NBackPreferences.EndCondition condition = NBackPreferences.getEndCondition(this);
+        switch (condition) {
+            case time:
+                startActivity(new Intent(this, TimeGameActivity.class));
+                break;
+            case expression:
+                startActivity(new Intent(this, ExpressionGameActivity.class));
+                break;
+        }
     }
 
     public void onClickStats(@SuppressWarnings("unused") View view) {

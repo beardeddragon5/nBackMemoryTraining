@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.Executors;
@@ -25,17 +26,24 @@ public class ScoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
 
+        final Locale locale = getResources().getConfiguration().locale;
         final int n = NBackPreferences.getN(this);
         final int correct = getIntent().getIntExtra(INTENT_EXTRA_CORRECT, -1);
         final int expressionCount = getIntent().getIntExtra(INTENT_EXTRA_EXPRESSIONS_COUNT, -1);
-        final String correctText = String.format(Locale.GERMANY, "%d / %d", correct, expressionCount);
+        final String correctText = String.format(locale, "%d / %d", correct, expressionCount);
         final String percent = expressionCount != 0 ?
-                String.format(Locale.GERMANY, "%d%%", (correct * 100) / expressionCount) :
+                String.format(locale, "%d%%", (correct * 100) / expressionCount) :
                 "n.a.";
 
         final int score = (int) Math.ceil(((double) correct / expressionCount) * expressionCount * Math.pow(10, n));
         final TextView bestScoreToday = findViewById(R.id.score_best_today);
         final TextView bestScore = findViewById(R.id.score_best);
+
+        final Calendar cal = Calendar.getInstance(locale);
+        cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+        cal.clear(Calendar.MINUTE);
+        cal.clear(Calendar.SECOND);
+        cal.clear(Calendar.MILLISECOND);
 
         bestScoreToday.setText("...");
         bestScore.setText("...");
@@ -45,7 +53,7 @@ public class ScoreActivity extends AppCompatActivity {
 
             db.statsDao().addStats(n, expressionCount, score, new Date());
 
-            final int bestToday = db.statsDao().getTodaysBestScore();
+            final int bestToday = db.statsDao().getBestScoreSince(cal.getTime());
             final int best = db.statsDao().getBestScore();
 
             bestScoreToday.setText(String.valueOf(bestToday));

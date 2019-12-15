@@ -21,7 +21,10 @@
             android:name=".ScoreActivity"
             android:noHistory="true" />
         <activity
-            android:name=".GameActivity"
+            android:name=".TimeGameActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".ExpressionGameActivity"
             android:noHistory="true" />
         <activity
             android:name=".ConfigActivity"

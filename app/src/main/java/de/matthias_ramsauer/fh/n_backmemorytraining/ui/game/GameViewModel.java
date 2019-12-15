@@ -23,7 +23,6 @@ public class GameViewModel extends ViewModel implements Serializable {
     public int correct;
     public int answeredExpressionCount = 0;
     public final List<Expression> expressions = new ArrayList<>(10);
-    public int selected = -1;
     public long remainingTime;
 
     @Nullable
@@ -31,6 +30,11 @@ public class GameViewModel extends ViewModel implements Serializable {
         if (expressions.isEmpty()) {
             return null;
         }
+
+        if (endCondition == NBackPreferences.EndCondition.expression && expressions.size() > expressionLimit) {
+            return null;
+        }
+
         return expressions.get(expressions.size() - 1);
     }
 
@@ -42,9 +46,30 @@ public class GameViewModel extends ViewModel implements Serializable {
         return expressions.get(expressions.size() - n - 1);
     }
 
+    public boolean isGameDone() {
+        switch(endCondition) {
+            case expression:
+                return expressionLimit == expressions.size() - n;
+            case time:
+                return remainingTime <= 0;
+        }
+        throw new IllegalStateException("endconditon unknown");
+    }
+
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isInitialized() {
         return expressions.size() != 0;
+    }
+
+    public int answer(int selectedResult) {
+        assert this.getNBackExpression() != null;
+        final Expression expression = getNBackExpression();
+
+        answeredExpressionCount++;
+        if (expression.result == selectedResult) {
+            correct++;
+        }
+        return expression.result;
     }
 
     @Override
@@ -57,7 +82,7 @@ public class GameViewModel extends ViewModel implements Serializable {
                 ", timeLimit='" + timeLimit + '\'' +
                 ", correct=" + correct +
                 ", expressions=" + expressions +
-                ", selected=" + selected +
+//                ", selected=" + selected +
                 '}';
     }
 }

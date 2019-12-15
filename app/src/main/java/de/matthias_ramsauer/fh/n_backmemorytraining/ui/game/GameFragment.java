@@ -52,15 +52,8 @@ public class GameFragment extends Fragment {
         assert view != null;
 
         final TextView expressionView = view.findViewById(R.id.game_expression);
-
-        if (mViewModel.endCondition == NBackPreferences.EndCondition.expression && mViewModel.expressions.size() > mViewModel.expressionLimit) {
-            expressionView.setText("");
-            return;
-        }
-
         final Expression expression = mViewModel.getExpression();
-        if (expression != null) {
-            expressionView.setText(expression.toString());
-        }
+
+        expressionView.setText(expression != null ? expression.toString() : "");
     }
 }

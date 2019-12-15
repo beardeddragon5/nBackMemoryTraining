@@ -4,14 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Checkable;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -21,9 +25,15 @@ import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import de.matthias_ramsauer.fh.n_backmemorytraining.R;
 import de.matthias_ramsauer.fh.n_backmemorytraining.db.Stats;
@@ -38,20 +48,26 @@ public class StatsGraphFragment extends Fragment {
     private final static String KEY_TIME_SPAN = "graph_time_span";
 
     enum TimeSpan {
-        Week(R.id.stats_graph_week),
-        Month(R.id.stats_graph_month),
-        Year(R.id.stats_graph_year);
+        Week(R.id.stats_graph_week, "EEE"),
+        Month(R.id.stats_graph_month, "d"),
+        Year(R.id.stats_graph_year, "LLL");
 
         @IdRes
         public final int id;
+        public final String dateFormatString;
 
-        TimeSpan(int id) {
+        TimeSpan(int id, String dateFormatString) {
             this.id = id;
+            this.dateFormatString = dateFormatString;
+        }
+
+        public String format(Locale local, Date date) {
+            return new SimpleDateFormat(this.dateFormatString, local).format(date);
         }
     }
 
     private TimeSpan timeSpan = TimeSpan.Week;
-    private LineChart chart;
+    private BarChart chart;
 
     public static StatsGraphFragment newInstance() {
         return new StatsGraphFragment();
@@ -78,7 +94,6 @@ public class StatsGraphFragment extends Fragment {
             Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_stats_graph, container, false);
         final MaterialButtonToggleGroup group = root.findViewById(R.id.stats_time_span_group);
-        final Locale locale = getResources().getConfiguration().locale;
         final int textColor = getResources().getColor(R.color.primaryTextColor);
 
         ((MaterialButton) root.findViewById(R.id.stats_graph_week)).addOnCheckedChangeListener(this::onTimeSpanChange);
@@ -91,35 +106,21 @@ public class StatsGraphFragment extends Fragment {
         chart.getDescription().setEnabled(false);
         chart.setDrawGridBackground(false);
         chart.setAutoScaleMinMaxEnabled(true);
-        chart.getXAxis().setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getAxisLabel(float value, AxisBase axis) {
-                final long time = (long) value;
-                final Date date = new Date(time);
-
-                switch (timeSpan) {
-                    case Week:
-                        return new SimpleDateFormat("EE", locale).format(date);
-                    case Month:
-                        return new SimpleDateFormat("W", locale).format(date);
-                    case Year:
-                        return new SimpleDateFormat("L", locale).format(date);
-                    default:
-                        throw new UnsupportedOperationException();
-                }
-            }
-        });
+        chart.getXAxis().setTextColor(textColor);
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        chart.getXAxis().setDrawGridLines(false);
+        chart.getXAxis().setGranularity(1f);
+        chart.getXAxis().setGranularityEnabled(true);
         chart.getAxisLeft().setValueFormatter(new ValueFormatter() {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
                 return Integer.toString((int)value);
             }
         });
-
-        chart.getXAxis().setTextColor(textColor);
+        chart.getAxisLeft().setAxisMinimum(0);
         chart.getAxisLeft().setTextColor(textColor);
         chart.setNoDataTextColor(textColor);
-
+        chart.setFitBars(true);
         chart.setPinchZoom(true);
         chart.setDoubleTapToZoomEnabled(false);
         chart.getAxisRight().setDrawLabels(false);
@@ -136,46 +137,106 @@ public class StatsGraphFragment extends Fragment {
     }
 
     public void updateView() {
+        final Locale locale = getResources().getConfiguration().locale;
+
         DatabaseExecutor.getInstance().execute(() -> {
             final StatsDatabase db = StatsDatabase.getInstance(getActivity());
             final List<Stats> values;
+            final Calendar cal = Calendar.getInstance(locale);
+            cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+            cal.clear(Calendar.MINUTE);
+            cal.clear(Calendar.SECOND);
+            cal.clear(Calendar.MILLISECOND);
 
             switch (timeSpan) {
                 case Week:
-                    values = db.statsDao().getWeeksState();
-                    chart.getXAxis().setLabelCount(7);
+                    cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
                     break;
                 case Month:
-                    values = db.statsDao().getMonthsState();
-                    chart.getXAxis().setLabelCount(5);
+                    cal.set(Calendar.DAY_OF_MONTH, 1);
                     break;
                 case Year:
-                    values = db.statsDao().getYearsState();
-                    chart.getXAxis().setLabelCount(12);
+                    cal.set(Calendar.DAY_OF_YEAR, 1);
                     break;
                 default:
                     throw new UnsupportedOperationException();
             }
 
+            values = db.statsDao().getStatsSince(cal.getTime());
             if (values.isEmpty()) {
                 return;
             }
 
-            final List<Entry> dataPoints = new ArrayList<>(values.size());
-            for (final Stats stat : values) {
-                dataPoints.add(new Entry(stat.date.getTime(), stat.score));
+            final List<String> labels = new ArrayList<>();
+            switch (timeSpan) {
+                case Week:
+                    for (int i = 1; i <= cal.getActualMaximum(Calendar.DAY_OF_WEEK); i++) {
+                        cal.set(Calendar.DAY_OF_WEEK, i);
+                        labels.add(timeSpan.format(locale, cal.getTime()));
+                    }
+                    break;
+                case Month:
+                    for (int i = 1; i <= cal.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
+                        cal.set(Calendar.DAY_OF_MONTH, i);
+                        labels.add(timeSpan.format(locale, cal.getTime()));
+                    }
+                    break;
+                case Year:
+                    for (int i = 0; i <= cal.getActualMaximum(Calendar.MONTH); i++) {
+                        cal.set(Calendar.MONTH, i);
+                        labels.add(timeSpan.format(locale, cal.getTime()));
+                    }
+                    break;
+                default:
+                    throw new UnsupportedOperationException();
             }
 
-            final LineDataSet dataSet = new LineDataSet(dataPoints, "");
-            dataSet.setLineWidth(2f);
-            dataSet.setDrawValues(false);
-            dataSet.setValueTextColor(getResources().getColor(R.color.primaryTextColor));
 
-            final LineData data = new LineData(dataSet);
-            data.setValueTextSize(10f);
+            final List<BarEntry> dataPoints = new ArrayList<>(values.size());
+            final Map<String, Integer> groupScoreByLabel = new HashMap<>();
+
+            for (final Stats stat : values) {
+                final String label = timeSpan.format(locale, stat.date);
+                final Integer currentScore = groupScoreByLabel.get(label);
+                if (currentScore == null) {
+                    groupScoreByLabel.put(label, stat.score);
+                } else if (currentScore.intValue() < stat.score) {
+                    groupScoreByLabel.put(label, stat.score);
+                }
+            }
+
+            for (int i = 0; i < labels.size(); i++) {
+                final String label = labels.get(i);
+                if (groupScoreByLabel.containsKey(label)) {
+                    dataPoints.add(new BarEntry(i, groupScoreByLabel.get(label)));
+                }
+            }
+
+            final BarDataSet dataSet = new BarDataSet(dataPoints, "");
+            dataSet.setDrawValues(false);
+
+            final BarData data = new BarData(dataSet);
+            chart.getXAxis().setLabelCount(labels.size());             
+            chart.getXAxis().setAxisMinimum(0 - data.getBarWidth() / 2);
+            chart.getXAxis().setAxisMaximum(labels.size() - 1 + data.getBarWidth() / 2);
+            chart.getXAxis().setValueFormatter(new ValueFormatter() {
+
+                @Override
+                public String getAxisLabel(float value, AxisBase axis) {
+                    final int index = (int) value;
+                    if (index < 0 || index >= labels.size()) {
+                        return "";
+                    }
+                    if (timeSpan == TimeSpan.Month && index % 2 == 1) {
+                        return "";
+                    }
+                    return labels.get(index);
+                }
+            });
 
             getActivity().runOnUiThread(() -> {
                 chart.setData(data);
+
                 chart.invalidate();
             });
         });
