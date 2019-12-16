@@ -8,6 +8,8 @@ import androidx.room.Query;
 import java.util.Date;
 import java.util.List;
 
+import de.matthias_ramsauer.fh.n_backmemorytraining.model.Stats;
+
 
 @Dao
 public interface StatsDao {

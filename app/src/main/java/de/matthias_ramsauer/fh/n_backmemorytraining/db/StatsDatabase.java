@@ -8,6 +8,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import de.matthias_ramsauer.fh.n_backmemorytraining.db.converter.DateConverter;
+import de.matthias_ramsauer.fh.n_backmemorytraining.model.Stats;
 
 @Database(entities = { Stats.class }, version = 1)
 @TypeConverters({DateConverter.class})

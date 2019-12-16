@@ -3,7 +3,7 @@ package de.matthias_ramsauer.fh.n_backmemorytraining.ui.stats;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
-import de.matthias_ramsauer.fh.n_backmemorytraining.db.Stats;
+import de.matthias_ramsauer.fh.n_backmemorytraining.model.Stats;
 
 class StatsDiffCallback extends DiffUtil.ItemCallback<Stats> {
 

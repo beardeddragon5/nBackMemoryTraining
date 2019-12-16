@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import java.util.Random;
 
+import de.matthias_ramsauer.fh.n_backmemorytraining.model.Expression;
+
 import static org.junit.Assert.*;
 
 public class ExpressionBuilderTest {

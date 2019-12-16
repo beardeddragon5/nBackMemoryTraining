@@ -1,6 +1,5 @@
-package de.matthias_ramsauer.fh.n_backmemorytraining.db;
+package de.matthias_ramsauer.fh.n_backmemorytraining.model;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

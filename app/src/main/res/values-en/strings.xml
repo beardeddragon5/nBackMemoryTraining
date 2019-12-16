@@ -6,7 +6,7 @@
     <string name="main_stats">Stats</string>
 
     <string name="config_title">Configuration</string>
-    <string name="config_item_revert_changes">Revert changes</string>
+    <string name="config_item_revert_changes">Dismiss changes</string>
     <string name="config_item_save">Save</string>
     <string name="config_item_reset_to_default">Reset to default</string>
 
@@ -37,22 +37,22 @@
     <string name="toast_saved">Saved</string>
     <string name="toast_save_failed">Save failed</string>
     <string name="toast_reset_to_default">Reset Configuration</string>
-    <string name="toast_revert_changes">Changes reverted</string>
+    <string name="toast_revert_changes">Changes dismissed</string>
 
     <string name="game_configuration">Game Configurations</string>
-    <string name="pref_n_key">n</string>
     <string name="pref_n_title">Answer offset</string>
+    <string name="pref_n_summary">Provide answer solutions with an offset of {} expressions</string>
 
-    <string name="pref_end_condition_key">end_condition</string>
     <string name="pref_end_condition_title">End condition</string>
     <string name="pref_end_condition_expression">Expression</string>
     <string name="pref_end_condition_time">Time</string>
+    <string name="pref_end_condition_summary">Exercise ends on {} limit</string>
 
-    <string name="pref_time_limit_key">time_limit</string>
     <string name="pref_time_limit_title">Time Limit</string>
+    <string name="pref_time_limit_summary">Exercise ends after {}</string>
 
-    <string name="pref_expression_limit_key">expression_limit</string>
     <string name="pref_expression_limit_title">Expression Limit</string>
+    <string name="pref_expression_limit_summary">Exercise ends after {} expressions</string>
 
     <string name="stats_list">Exercises</string>
     <string name="stats_graph">Performance Graph</string>
@@ -62,6 +62,7 @@
     <string name="stats_this_week">Week</string>
     <string name="stats_this_month">Month</string>
     <string name="stats_this_year">Year</string>
+
 
     <string-array name="stats_sortby_values">
         <item>Date</item>

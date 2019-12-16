@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import de.matthias_ramsauer.fh.n_backmemorytraining.GameActivity;
 import de.matthias_ramsauer.fh.n_backmemorytraining.R;
+import de.matthias_ramsauer.fh.n_backmemorytraining.viewmodel.GameViewModel;
 
 public class NumpadFragment extends Fragment implements Animator.AnimatorListener {
 

@@ -1,4 +1,4 @@
-package de.matthias_ramsauer.fh.n_backmemorytraining.util;
+package de.matthias_ramsauer.fh.n_backmemorytraining.model;
 
 import androidx.annotation.NonNull;
 

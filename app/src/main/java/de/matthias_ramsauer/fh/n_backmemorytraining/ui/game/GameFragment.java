@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import de.matthias_ramsauer.fh.n_backmemorytraining.R;
-import de.matthias_ramsauer.fh.n_backmemorytraining.util.Expression;
-import de.matthias_ramsauer.fh.n_backmemorytraining.util.NBackPreferences;
+import de.matthias_ramsauer.fh.n_backmemorytraining.model.Expression;
+import de.matthias_ramsauer.fh.n_backmemorytraining.viewmodel.GameViewModel;
 
 public class GameFragment extends Fragment {
 

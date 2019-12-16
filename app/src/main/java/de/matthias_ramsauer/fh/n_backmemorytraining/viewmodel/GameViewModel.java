@@ -1,4 +1,6 @@
-package de.matthias_ramsauer.fh.n_backmemorytraining.ui.game;
+package de.matthias_ramsauer.fh.n_backmemorytraining.viewmodel;
+
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,11 +9,16 @@ import androidx.lifecycle.ViewModel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-import de.matthias_ramsauer.fh.n_backmemorytraining.util.Expression;
+import de.matthias_ramsauer.fh.n_backmemorytraining.model.Expression;
+import de.matthias_ramsauer.fh.n_backmemorytraining.util.ExpressionBuilder;
+import de.matthias_ramsauer.fh.n_backmemorytraining.util.IntSupplier;
 import de.matthias_ramsauer.fh.n_backmemorytraining.util.NBackPreferences;
 
 public class GameViewModel extends ViewModel implements Serializable {
+
+    public static final IntSupplier random = new Random()::nextInt;
 
     // Parameters loaded from preferences
     public int n = -1;
@@ -20,10 +27,22 @@ public class GameViewModel extends ViewModel implements Serializable {
     public long timeLimit = -1;
 
     // Game State
+    public boolean initialized = false;
     public int correct;
     public int answeredExpressionCount = 0;
     public final List<Expression> expressions = new ArrayList<>(10);
     public long remainingTime;
+
+    public void initialize(@NonNull Context context) {
+        final Expression expression = ExpressionBuilder.expression(random);
+        this.expressions.add(expression);
+        this.n = NBackPreferences.getN(context);
+        this.expressionLimit = NBackPreferences.getExpressionLimit(context);
+        this.timeLimit = NBackPreferences.getTimeLimit(context);
+        this.endCondition = NBackPreferences.getEndCondition(context);
+        this.remainingTime = this.timeLimit;
+        this.initialized = true;
+    }
 
     @Nullable
     public Expression getExpression() {
@@ -58,7 +77,7 @@ public class GameViewModel extends ViewModel implements Serializable {
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isInitialized() {
-        return expressions.size() != 0;
+        return initialized;
     }
 
     public int answer(int selectedResult) {
@@ -70,6 +89,10 @@ public class GameViewModel extends ViewModel implements Serializable {
             correct++;
         }
         return expression.result;
+    }
+
+    public boolean showNumpad() {
+        return this.n < this.expressions.size();
     }
 
     @Override

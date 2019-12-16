@@ -1,5 +1,7 @@
 package de.matthias_ramsauer.fh.n_backmemorytraining.util;
 
+import de.matthias_ramsauer.fh.n_backmemorytraining.model.Expression;
+
 public class ExpressionBuilder {
 
     private static final char[] symbols = {'+', '-'};

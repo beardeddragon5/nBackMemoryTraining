@@ -1,7 +1,5 @@
 package de.matthias_ramsauer.fh.n_backmemorytraining.util;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;

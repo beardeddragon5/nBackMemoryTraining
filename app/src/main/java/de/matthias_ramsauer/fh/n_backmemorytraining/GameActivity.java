@@ -11,20 +11,14 @@ import android.os.PersistableBundle;
 import android.widget.TextView;
 
 import java.util.Locale;
-import java.util.Random;
 
 import de.matthias_ramsauer.fh.n_backmemorytraining.ui.game.GameFragment;
-import de.matthias_ramsauer.fh.n_backmemorytraining.ui.game.GameViewModel;
+import de.matthias_ramsauer.fh.n_backmemorytraining.viewmodel.GameViewModel;
 import de.matthias_ramsauer.fh.n_backmemorytraining.ui.game.NextFragment;
 import de.matthias_ramsauer.fh.n_backmemorytraining.ui.game.NumpadFragment;
-import de.matthias_ramsauer.fh.n_backmemorytraining.util.Expression;
-import de.matthias_ramsauer.fh.n_backmemorytraining.util.ExpressionBuilder;
-import de.matthias_ramsauer.fh.n_backmemorytraining.util.IntSupplier;
-import de.matthias_ramsauer.fh.n_backmemorytraining.util.NBackPreferences;
 
 public abstract class GameActivity extends AppCompatActivity {
 
-    protected static final IntSupplier random = new Random()::nextInt;
     protected GameViewModel viewModel;
 
     @Override
@@ -42,16 +36,8 @@ public abstract class GameActivity extends AppCompatActivity {
         }
 
         if (!viewModel.isInitialized()) {
-            final Expression expression = ExpressionBuilder.expression(random);
-            viewModel.expressions.add(expression);
-
-            viewModel.n = NBackPreferences.getN(this);
-            viewModel.expressionLimit = NBackPreferences.getExpressionLimit(this);
-            viewModel.timeLimit = NBackPreferences.getTimeLimit(this);
-            viewModel.endCondition = NBackPreferences.getEndCondition(this);
-            viewModel.remainingTime = viewModel.timeLimit;
+            viewModel.initialize(this);
         }
-
 
         final TextView nIndicator = findViewById(R.id.game_n);
         nIndicator.setText(String.format(Locale.GERMANY, "n = %d", viewModel.n));
@@ -61,12 +47,7 @@ public abstract class GameActivity extends AppCompatActivity {
                 .replace(R.id.game_screen, new GameFragment())
                 .commitNow();
 
-        final Fragment input;
-        if (viewModel.n >= viewModel.expressions.size()) {
-            input = new NextFragment();
-        } else {
-            input = new NumpadFragment();
-        }
+        final Fragment input = viewModel.showNumpad() ? new NumpadFragment() : new NextFragment();
 
         getSupportFragmentManager().beginTransaction()
                 .disallowAddToBackStack()

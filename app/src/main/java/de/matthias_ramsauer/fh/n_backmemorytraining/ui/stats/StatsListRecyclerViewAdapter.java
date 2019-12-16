@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import de.matthias_ramsauer.fh.n_backmemorytraining.R;
-import de.matthias_ramsauer.fh.n_backmemorytraining.db.Stats;
+import de.matthias_ramsauer.fh.n_backmemorytraining.model.Stats;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
