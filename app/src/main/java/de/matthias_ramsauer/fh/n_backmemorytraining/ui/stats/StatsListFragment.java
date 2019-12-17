@@ -5,10 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.paging.DataSource;
-import androidx.paging.LivePagedListBuilder;
-import androidx.paging.PagedList;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -19,17 +15,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import de.matthias_ramsauer.fh.n_backmemorytraining.R;
-import de.matthias_ramsauer.fh.n_backmemorytraining.model.Stats;
-import de.matthias_ramsauer.fh.n_backmemorytraining.db.StatsDatabase;
-import de.matthias_ramsauer.fh.n_backmemorytraining.util.DatabaseExecutor;
+import de.matthias_ramsauer.fh.n_backmemorytraining.model.StatsSort;
+import de.matthias_ramsauer.fh.n_backmemorytraining.tasks.UpdateListTask;
 
 public class StatsListFragment extends Fragment {
 
     private static final String STATE_SORT_BY_DATE = "sort-by-date";
-    private static final int SORT_DATE = 0;
-    private static final int SORT_SCORE = 1;
-
-    private int sort = SORT_DATE;
+    private StatsSort sort = StatsSort.Date;
     private StatsListRecyclerViewAdapter listAdapter;
 
     public StatsListFragment() {
@@ -43,7 +35,7 @@ public class StatsListFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt(STATE_SORT_BY_DATE, sort);
+        outState.putInt(STATE_SORT_BY_DATE, sort.ordinal());
     }
 
     @Override
@@ -51,7 +43,7 @@ public class StatsListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
-            sort = savedInstanceState.getInt(STATE_SORT_BY_DATE);
+            sort = StatsSort.values()[savedInstanceState.getInt(STATE_SORT_BY_DATE)];
         }
     }
 
@@ -77,7 +69,7 @@ public class StatsListFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sort = position; // equals SORT_DATE and SORT_SCORE
+                sort = StatsSort.values()[position]; // equals SORT_DATE and SORT_SCORE
                 updateList();
             }
             @Override
@@ -88,38 +80,12 @@ public class StatsListFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateList();
-    }
-
     private void updateList() {
-        DatabaseExecutor.getInstance().execute(() -> {
-            final StatsDatabase db = StatsDatabase.getInstance(getActivity());
-            final DataSource.Factory<Integer, Stats> factory;
-
-            switch (sort) {
-                case SORT_DATE:
-                    factory = db.statsDao().getStatsSortedByDate();
-                    break;
-                case SORT_SCORE:
-                    factory = db.statsDao().getStatsSortedByScore();
-                    break;
-                default:
-                    throw new IllegalStateException("sort type not implemented");
+        final UpdateListTask task = new UpdateListTask(sort, stats -> stats.observe(this, currentStats -> {
+            if (currentStats != null) {
+                listAdapter.submitList(currentStats);
             }
-            final LiveData<PagedList<Stats>> stats = new LivePagedListBuilder<>(factory, 20).build();
-
-            final Activity activity = getActivity();
-
-            assert activity != null;
-
-            activity.runOnUiThread(() -> stats.observe(this, currentStats -> {
-                if (currentStats != null) {
-                    listAdapter.submitList(currentStats);
-                }
-            }));
-        });
+        }));
+        task.execute(getActivity());
     }
 }

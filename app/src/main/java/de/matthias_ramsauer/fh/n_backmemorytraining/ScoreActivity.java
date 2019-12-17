@@ -7,12 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
-import de.matthias_ramsauer.fh.n_backmemorytraining.db.StatsDatabase;
-import de.matthias_ramsauer.fh.n_backmemorytraining.util.DatabaseExecutor;
+import de.matthias_ramsauer.fh.n_backmemorytraining.tasks.InsertScoreTask;
 import de.matthias_ramsauer.fh.n_backmemorytraining.util.NBackPreferences;
 
 public class ScoreActivity extends AppCompatActivity {
@@ -38,26 +35,15 @@ public class ScoreActivity extends AppCompatActivity {
         final TextView bestScoreToday = findViewById(R.id.score_best_today);
         final TextView bestScore = findViewById(R.id.score_best);
 
-        final Calendar cal = Calendar.getInstance(locale);
-        cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
-        cal.clear(Calendar.MINUTE);
-        cal.clear(Calendar.SECOND);
-        cal.clear(Calendar.MILLISECOND);
-
         bestScoreToday.setText("...");
         bestScore.setText("...");
 
-        DatabaseExecutor.getInstance().execute(() -> {
-            final StatsDatabase db = StatsDatabase.getInstance(this);
+        final InsertScoreTask task = new InsertScoreTask(n, expressionCount, score, ((bestToday, best) -> {
+            bestScoreToday.setText(Integer.toString(bestToday));
+            bestScore.setText(Integer.toString(best));
+        }));
 
-            db.statsDao().addStats(n, expressionCount, score, new Date());
-
-            final int bestToday = db.statsDao().getBestScoreSince(cal.getTime());
-            final int best = db.statsDao().getBestScore();
-
-            bestScoreToday.setText(String.valueOf(bestToday));
-            bestScore.setText(String.valueOf(best));
-        });
+        task.execute(this);
 
         ((TextView) findViewById(R.id.score_n)).setText(String.valueOf(n));
         ((TextView) findViewById(R.id.score_correct)).setText(correctText);

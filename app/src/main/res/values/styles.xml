@@ -35,7 +35,6 @@
 
         <item name="materialAlertDialogTheme">@style/MaterialAlertDialog.MaterialComponents.Dark</item>
         <item name="materialButtonOutlinedStyle">@style/Widget.MaterialComponents.Button.DarkOutlinedButton</item>
-        <item name="android:preferenceScreenStyle">@style/MaterialAlertDialog.MaterialComponents.Dark</item>
         <item name="alertDialogTheme">@style/MaterialAlertDialog.MaterialComponents.Dark</item>
         <item name="android:editTextColor">@color/primaryTextColor</item>
         <item name="android:textColorSecondary">@color/secondaryTextColor</item>

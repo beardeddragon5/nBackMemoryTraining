@@ -17,35 +17,41 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/game_configuration">
+    <PreferenceCategory
+        android:title="@string/game_configuration"
+        app:iconSpaceReserved="false">
         <EditTextPreference
-            app:key="n"
-            app:title="@string/pref_n_title"
             app:defaultValue="1"
+            app:iconSpaceReserved="false"
+            app:key="n"
             app:persistent="true"
+            app:title="@string/pref_n_title"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
-            app:key="end_condition"
-            app:title="@string/pref_end_condition_title"
             app:defaultValue="expression"
             app:entries="@array/end_condition_entries"
             app:entryValues="@array/end_condition_values"
+            app:iconSpaceReserved="false"
+            app:key="end_condition"
             app:persistent="true"
+            app:title="@string/pref_end_condition_title"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            app:key="time_limit"
-            app:title="@string/pref_time_limit_title"
             app:defaultValue="01:30"
+            app:iconSpaceReserved="false"
+            app:key="time_limit"
             app:persistent="true"
+            app:title="@string/pref_time_limit_title"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            app:key="expression_limit"
-            app:title="@string/pref_expression_limit_title"
             app:defaultValue="10"
+            app:iconSpaceReserved="false"
+            app:key="expression_limit"
             app:persistent="true"
+            app:title="@string/pref_expression_limit_title"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 </PreferenceScreen>
