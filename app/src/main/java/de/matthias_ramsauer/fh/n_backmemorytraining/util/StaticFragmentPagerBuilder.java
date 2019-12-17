@@ -27,8 +27,8 @@ public class StaticFragmentPagerBuilder {
     public FragmentPagerAdapter build(FragmentManager manager) {
         return new FragmentPagerAdapter(manager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-            private CharSequence[] titles = pageTitles.toArray(new CharSequence[pageTitles.size()]);
-            private Fragment[] pages = fragments.toArray(new Fragment[fragments.size()]);
+            private final CharSequence[] titles = pageTitles.toArray(new CharSequence[0]);
+            private final Fragment[] pages = fragments.toArray(new Fragment[0]);
 
             @Nullable
             @Override

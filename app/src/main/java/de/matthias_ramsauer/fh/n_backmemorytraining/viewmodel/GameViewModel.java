@@ -22,12 +22,12 @@ public class GameViewModel extends ViewModel implements Serializable {
 
     // Parameters loaded from preferences
     public int n = -1;
-    public NBackPreferences.EndCondition endCondition;
+    private NBackPreferences.EndCondition endCondition;
     public int expressionLimit = -1;
-    public long timeLimit = -1;
+    private long timeLimit = -1;
 
     // Game State
-    public boolean initialized = false;
+    private boolean initialized = false;
     public int correct;
     public int answeredExpressionCount = 0;
     public final List<Expression> expressions = new ArrayList<>(10);
@@ -58,7 +58,7 @@ public class GameViewModel extends ViewModel implements Serializable {
     }
 
     @Nullable
-    public Expression getNBackExpression() {
+    private Expression getNBackExpression() {
         if (expressions.size() <= n) {
             return null;
         }

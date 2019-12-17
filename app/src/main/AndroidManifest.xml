@@ -18,14 +18,11 @@
                 android:value="de.matthias_ramsauer.fh.n_backmemorytraining.MainActivity" />
         </activity>
         <activity
-            android:name=".ScoreActivity"
-            android:noHistory="true" />
+            android:name=".ScoreActivity" />
         <activity
-            android:name=".TimeGameActivity"
-            android:noHistory="true" />
+            android:name=".TimeGameActivity" />
         <activity
-            android:name=".ExpressionGameActivity"
-            android:noHistory="true" />
+            android:name=".ExpressionGameActivity" />
         <activity
             android:name=".ConfigActivity"
             android:parentActivityName=".MainActivity" />
@@ -34,6 +31,22 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"
+                    android:host="nback.matthias-ramsauer.de" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="nback"
+                    android:host="nback.matthias-ramsauer.de" />
             </intent-filter>
         </activity>
     </application>

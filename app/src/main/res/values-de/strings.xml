@@ -42,14 +42,18 @@
 
     <string name="game_configuration">Spieleinstellungen</string>
     <string name="pref_n_title">Antwortversatz</string>
+    <string name="pref_n_summary">Gib Ausdruckslösung nach {} Ausdrücken</string>
 
     <string name="pref_end_condition_title">Endbedingung</string>
     <string name="pref_end_condition_expression">Ausdruck</string>
     <string name="pref_end_condition_time">Zeit</string>
+    <string name="pref_end_condition_summary">Übung endet mit {}limit</string>
 
     <string name="pref_time_limit_title">Zeitlimit</string>
+    <string name="pref_time_limit_summary">Übung endet nach {}</string>
 
     <string name="pref_expression_limit_title">Ausdruckslimit</string>
+    <string name="pref_expression_limit_summary">Übung endet nach {} Ausdrücken</string>
 
     <string name="stats_list">Übungsliste</string>
     <string name="stats_graph">Leistungsgraph</string>

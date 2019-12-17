@@ -3,6 +3,7 @@ package de.matthias_ramsauer.fh.n_backmemorytraining.ui.config;
 import android.os.Bundle;
 import android.text.InputType;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
@@ -18,7 +19,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
-        final SettingsViewModel viewModel = ViewModelProviders.of(getActivity()).get(SettingsViewModel.class);
+        final FragmentActivity activity = getActivity();
+
+        assert activity != null;
+
+        final SettingsViewModel viewModel = ViewModelProviders.of(activity).get(SettingsViewModel.class);
         final Preference nPref = findPreference(NBackPreferences.Settings.N.key);
         final Preference endConditionPref = findPreference(NBackPreferences.Settings.EndCondition.key);
         final Preference timeLimitPref = findPreference(NBackPreferences.Settings.TimeLimit.key);

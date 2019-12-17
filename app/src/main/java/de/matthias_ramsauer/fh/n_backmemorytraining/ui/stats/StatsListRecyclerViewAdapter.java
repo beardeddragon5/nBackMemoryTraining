@@ -20,12 +20,13 @@ public class StatsListRecyclerViewAdapter extends PagedListAdapter<Stats, StatsL
 
     private DateFormat dateFormatter;
 
-    protected StatsListRecyclerViewAdapter(@NonNull DiffUtil.ItemCallback<Stats> diffCallback) {
+    StatsListRecyclerViewAdapter(@NonNull DiffUtil.ItemCallback<Stats> diffCallback) {
         super(diffCallback);
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (dateFormatter == null) {
             dateFormatter = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.SHORT, SimpleDateFormat.SHORT,
                     parent.getResources().getConfiguration().locale);
@@ -36,7 +37,7 @@ public class StatsListRecyclerViewAdapter extends PagedListAdapter<Stats, StatsL
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final Stats stats = getItem(position);
         if (stats == null) {
             holder.clear();
@@ -46,26 +47,26 @@ public class StatsListRecyclerViewAdapter extends PagedListAdapter<Stats, StatsL
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public Stats item;
-        public TextView date;
-        public TextView n;
-        public TextView score;
+        Stats item;
+        final TextView date;
+        final TextView n;
+        final TextView score;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             date = view.findViewById(R.id.list_item_date);
             n = view.findViewById(R.id.list_item_n);
             score = view.findViewById(R.id.list_item_score);
         }
 
-        public void bind(Stats item) {
+        void bind(Stats item) {
             this.item = item;
             this.date.setText(dateFormatter.format(this.item.date));
             this.n.setText(String.valueOf(this.item.n));
             this.score.setText(String.valueOf(this.item.score));
         }
 
-        public void clear() {
+        void clear() {
             this.item = null;
             this.date.setText(null);
             this.n.setText(null);

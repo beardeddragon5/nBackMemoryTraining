@@ -2,16 +2,11 @@ package de.matthias_ramsauer.fh.n_backmemorytraining.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
-import java.util.Arrays;
 import java.util.Map;
-import java.util.Set;
-
-import de.matthias_ramsauer.fh.n_backmemorytraining.R;
 
 public class NBackPreferences {
 

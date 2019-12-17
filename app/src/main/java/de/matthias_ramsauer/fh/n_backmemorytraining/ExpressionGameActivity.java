@@ -25,6 +25,7 @@ public class ExpressionGameActivity extends GameActivity {
             i.putExtra(ScoreActivity.INTENT_EXTRA_CORRECT, viewModel.correct);
             i.putExtra(ScoreActivity.INTENT_EXTRA_EXPRESSIONS_COUNT, viewModel.answeredExpressionCount);
             startActivity(i);
+            this.finishAndRemoveTask();
             return;
         }
 

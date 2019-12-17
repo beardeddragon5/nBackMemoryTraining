@@ -19,7 +19,7 @@ import de.matthias_ramsauer.fh.n_backmemorytraining.ui.game.NumpadFragment;
 
 public abstract class GameActivity extends AppCompatActivity {
 
-    protected GameViewModel viewModel;
+    GameViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

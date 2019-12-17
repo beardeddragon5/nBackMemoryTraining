@@ -4,7 +4,7 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 
-public class FormatSummaryProvider<T extends Preference> implements Preference.SummaryProvider<T> {
+class FormatSummaryProvider<T extends Preference> implements Preference.SummaryProvider<T> {
 
     private final String format;
 

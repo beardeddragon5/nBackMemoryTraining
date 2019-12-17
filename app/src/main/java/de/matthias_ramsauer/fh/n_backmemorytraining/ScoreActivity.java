@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.Executors;
 
 import de.matthias_ramsauer.fh.n_backmemorytraining.db.StatsDatabase;
 import de.matthias_ramsauer.fh.n_backmemorytraining.util.DatabaseExecutor;

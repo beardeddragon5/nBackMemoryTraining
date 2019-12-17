@@ -7,11 +7,8 @@
 
     <!-- https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=37474F&secondary.color=880E4F&primary.text.color=ffffff -->
     <color name="primaryColor">#37474f</color>
-    <color name="primaryLightColor">#62727b</color>
     <color name="primaryDarkColor">#27373f</color>
     <color name="secondaryColor">#61bfed</color>
-    <color name="secondaryLightColor">#bc477b</color>
-    <color name="secondaryDarkColor">#560027</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#919191</color>
 </resources>

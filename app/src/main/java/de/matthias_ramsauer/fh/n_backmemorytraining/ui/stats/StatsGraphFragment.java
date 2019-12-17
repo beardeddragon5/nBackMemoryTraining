@@ -1,5 +1,6 @@
 package de.matthias_ramsauer.fh.n_backmemorytraining.ui.stats;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,7 @@ public class StatsGraphFragment extends Fragment {
 
     private final static String KEY_TIME_SPAN = "graph_time_span";
 
+    @SuppressWarnings("WeakerAccess")
     enum TimeSpan {
         Week(R.id.stats_graph_week, "EEE"),
         Month(R.id.stats_graph_month, "d"),
@@ -129,7 +131,7 @@ public class StatsGraphFragment extends Fragment {
         updateView();
     }
 
-    public void updateView() {
+    private void updateView() {
         final Locale locale = getResources().getConfiguration().locale;
 
         DatabaseExecutor.getInstance().execute(() -> {
@@ -193,14 +195,15 @@ public class StatsGraphFragment extends Fragment {
                 final Integer currentScore = groupScoreByLabel.get(label);
                 if (currentScore == null) {
                     groupScoreByLabel.put(label, stat.score);
-                } else if (currentScore.intValue() < stat.score) {
+                } else if (currentScore < stat.score) {
                     groupScoreByLabel.put(label, stat.score);
                 }
             }
 
             for (int i = 0; i < labels.size(); i++) {
                 final String label = labels.get(i);
-                if (groupScoreByLabel.containsKey(label)) {
+                if (label != null && groupScoreByLabel.containsKey(label)) {
+                    //noinspection ConstantConditions
                     dataPoints.add(new BarEntry(i, groupScoreByLabel.get(label)));
                 }
             }
@@ -227,7 +230,11 @@ public class StatsGraphFragment extends Fragment {
                 }
             });
 
-            getActivity().runOnUiThread(() -> {
+            final Activity activity = getActivity();
+
+            assert activity != null;
+
+            activity.runOnUiThread(() -> {
                 chart.setData(data);
 
                 chart.invalidate();

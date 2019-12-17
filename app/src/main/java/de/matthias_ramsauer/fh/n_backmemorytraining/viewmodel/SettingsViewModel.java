@@ -13,7 +13,7 @@ import de.matthias_ramsauer.fh.n_backmemorytraining.util.NBackPreferences;
 
 public class SettingsViewModel extends ViewModel {
 
-    private Map<NBackPreferences.Settings, String> values = new HashMap<>();
+    private final Map<NBackPreferences.Settings, String> values = new HashMap<>();
 
     public boolean save(@NonNull Context context) {
         final boolean saved = NBackPreferences.setPreferences(context, values);

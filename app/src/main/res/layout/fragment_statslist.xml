@@ -21,6 +21,7 @@
         android:text="@string/stats_list_n"
         android:textAppearance="?attr/textAppearanceListItemSecondary"
         android:paddingEnd="5dp"
+        android:paddingStart="0dp"
         android:labelFor="@id/list_item_n"
         app:layout_constraintStart_toStartOf="@id/list_item_date"
         app:layout_constraintTop_toBottomOf="@id/list_item_date" />
