@@ -1,12 +1,15 @@
 package de.matthias_ramsauer.fh.n_backmemorytraining.ui.stats;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -16,11 +19,13 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import de.matthias_ramsauer.fh.n_backmemorytraining.R;
+import de.matthias_ramsauer.fh.n_backmemorytraining.model.TimeSpan;
 import de.matthias_ramsauer.fh.n_backmemorytraining.tasks.UpdateGraphTask;
 
 /**
@@ -30,39 +35,11 @@ public class StatsGraphFragment extends Fragment {
 
     private final static String KEY_TIME_SPAN = "graph_time_span";
 
-    public enum TimeSpan {
-        Week(R.id.stats_graph_week, "EEE"),
-        Month(R.id.stats_graph_month, "d"),
-        Year(R.id.stats_graph_year, "LLL");
-
-        @IdRes
-        public final int id;
-        public final String dateFormatString;
-
-        TimeSpan(int id, String dateFormatString) {
-            this.id = id;
-            this.dateFormatString = dateFormatString;
-        }
-
-        public String format(Locale local, Date date) {
-            return new SimpleDateFormat(this.dateFormatString, local).format(date);
-        }
-    }
-
     private TimeSpan timeSpan = TimeSpan.Week;
     private BarChart chart;
 
-    public static StatsGraphFragment newInstance() {
-        return new StatsGraphFragment();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (savedInstanceState != null) {
-            this.timeSpan = TimeSpan.values()[savedInstanceState.getInt(KEY_TIME_SPAN)];
-        }
+    public StatsGraphFragment() {
+        super(R.layout.fragment_stats_graph);
     }
 
     @Override
@@ -72,18 +49,21 @@ public class StatsGraphFragment extends Fragment {
     }
 
     @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            this.timeSpan = TimeSpan.values()[savedInstanceState.getInt(KEY_TIME_SPAN)];
+        }
+    }
+
+    @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        final View root = inflater.inflate(R.layout.fragment_stats_graph, container, false);
-        final MaterialButtonToggleGroup group = root.findViewById(R.id.stats_time_span_group);
+        final View root = super.onCreateView(inflater, container, savedInstanceState);
+
+        // final View root = inflater.inflate(R.layout.fragment_stats_graph, container, false);
         final int textColor = getResources().getColor(R.color.primaryTextColor);
-
-        ((MaterialButton) root.findViewById(R.id.stats_graph_week)).addOnCheckedChangeListener(this::onTimeSpanChange);
-        ((MaterialButton) root.findViewById(R.id.stats_graph_month)).addOnCheckedChangeListener(this::onTimeSpanChange);
-        ((MaterialButton) root.findViewById(R.id.stats_graph_year)).addOnCheckedChangeListener(this::onTimeSpanChange);
-
-        group.check(this.timeSpan.id);
 
         chart = root.findViewById(R.id.plot);
         chart.getDescription().setEnabled(false);
@@ -102,6 +82,7 @@ public class StatsGraphFragment extends Fragment {
         });
         chart.getAxisLeft().setAxisMinimum(0);
         chart.getAxisLeft().setTextColor(textColor);
+        chart.getAxisRight().setDrawGridLines(false);
         chart.setNoDataTextColor(textColor);
         chart.setFitBars(true);
         chart.setPinchZoom(true);
@@ -114,6 +95,29 @@ public class StatsGraphFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+        final MaterialButtonToggleGroup group = getView().findViewById(R.id.stats_time_span_group);
+        group.check(this.timeSpan.id);
+
+        group.addOnButtonCheckedListener((group1, checkedId, isChecked) -> {
+            if (!isChecked && group1.getCheckedButtonId() == View.NO_ID) {
+                group1.check(checkedId);
+                return;
+            }
+            if (!isChecked) {
+                return;
+            }
+
+            final TimeSpan span = TimeSpan.getByResId(checkedId);
+            assert span != null;
+            timeSpan = span;
+            updateView();
+        });
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         updateView();
@@ -122,15 +126,5 @@ public class StatsGraphFragment extends Fragment {
     private void updateView() {
         final UpdateGraphTask task = new UpdateGraphTask(chart, timeSpan);
         task.execute(getActivity());
-    }
-
-    private void onTimeSpanChange(MaterialButton button, boolean isChecked) {
-        final TimeSpan buttonTimeSpan = TimeSpan.values()[Integer.parseInt((String) button.getTag(), 10)];
-        if (!isChecked && buttonTimeSpan == this.timeSpan) {
-            button.setChecked(true);
-        } else if (isChecked) {
-            this.timeSpan = buttonTimeSpan;
-            updateView();
-        }
     }
 }

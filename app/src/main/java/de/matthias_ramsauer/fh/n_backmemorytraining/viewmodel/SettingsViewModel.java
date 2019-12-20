@@ -6,12 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.preference.Preference;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.matthias_ramsauer.fh.n_backmemorytraining.util.NBackPreferences;
 
-public class SettingsViewModel extends ViewModel {
+public class SettingsViewModel extends ViewModel implements Serializable {
 
     private final Map<NBackPreferences.Settings, String> values = new HashMap<>();
 
@@ -25,6 +26,10 @@ public class SettingsViewModel extends ViewModel {
 
     public boolean hasChanged() {
         return !values.isEmpty();
+    }
+
+    public Map<NBackPreferences.Settings, String> getValues() {
+        return values;
     }
 
     public Preference.OnPreferenceChangeListener onChange(NBackPreferences.Settings setting, String matchRegex) {

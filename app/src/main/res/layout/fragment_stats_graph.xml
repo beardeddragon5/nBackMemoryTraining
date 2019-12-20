@@ -19,7 +19,7 @@
         android:layout_weight="1"
         android:gravity="center"
         app:checkedButton="@id/stats_graph_week"
-        app:singleSelection="true">
+        app:singleSelection="true" >
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/stats_graph_week"

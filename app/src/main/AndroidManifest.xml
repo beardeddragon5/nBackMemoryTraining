@@ -49,6 +49,11 @@
                     android:host="nback.matthias-ramsauer.de" />
             </intent-filter>
         </activity>
+        <uses-library android:name="android.test.runner"
+            android:required="false" />
+        <uses-library android:name="android.test.base"
+            android:required="false" />
+        <uses-library android:name="android.test.mock"
+            android:required="false" />
     </application>
-
 </manifest>

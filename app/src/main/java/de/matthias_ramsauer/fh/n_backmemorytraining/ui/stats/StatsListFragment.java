@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,14 +22,11 @@ import de.matthias_ramsauer.fh.n_backmemorytraining.tasks.UpdateListTask;
 public class StatsListFragment extends Fragment {
 
     private static final String STATE_SORT_BY_DATE = "sort-by-date";
-    private StatsSort sort = StatsSort.Date;
+    private StatsSort sort = StatsSort.Score;
     private StatsListRecyclerViewAdapter listAdapter;
 
     public StatsListFragment() {
-    }
-
-    public static StatsListFragment newInstance() {
-        return new StatsListFragment();
+        super(R.layout.fragment_statslist_list);
     }
 
     @Override
@@ -39,12 +37,17 @@ public class StatsListFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
             sort = StatsSort.values()[savedInstanceState.getInt(STATE_SORT_BY_DATE)];
         }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        updateList();
     }
 
     @Override
@@ -54,7 +57,7 @@ public class StatsListFragment extends Fragment {
 
         assert activity != null;
 
-        final View view = inflater.inflate(R.layout.fragment_statslist_list, container, false);
+        final View view = super.onCreateView(inflater, container, savedInstanceState);
         final RecyclerView recyclerView = view.findViewById(R.id.list);
         final Spinner spinner = view.findViewById(R.id.stats_list_sort_by);
 
@@ -65,7 +68,15 @@ public class StatsListFragment extends Fragment {
                 R.array.stats_sortby_values, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
+        recyclerView.setAdapter(listAdapter);
+        return view;
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        final Spinner spinner = getView().findViewById(R.id.stats_list_sort_by);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -75,9 +86,7 @@ public class StatsListFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
-
-        recyclerView.setAdapter(listAdapter);
-        return view;
+        spinner.setSelection(sort.ordinal());
     }
 
     private void updateList() {

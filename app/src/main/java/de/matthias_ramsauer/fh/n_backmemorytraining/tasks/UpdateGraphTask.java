@@ -1,6 +1,5 @@
 package de.matthias_ramsauer.fh.n_backmemorytraining.tasks;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -20,15 +19,15 @@ import java.util.Map;
 
 import de.matthias_ramsauer.fh.n_backmemorytraining.db.StatsDatabase;
 import de.matthias_ramsauer.fh.n_backmemorytraining.model.Stats;
-import de.matthias_ramsauer.fh.n_backmemorytraining.ui.stats.StatsGraphFragment;
+import de.matthias_ramsauer.fh.n_backmemorytraining.model.TimeSpan;
 
 public class UpdateGraphTask extends AsyncTask<Context, Void, BarData> {
 
     private final List<String> labels = new ArrayList<>();
-    private final StatsGraphFragment.TimeSpan timeSpan;
+    private final TimeSpan timeSpan;
     private final BarChart chart;
 
-    public UpdateGraphTask(BarChart chart, StatsGraphFragment.TimeSpan timeSpan) {
+    public UpdateGraphTask(BarChart chart, TimeSpan timeSpan) {
         this.chart = chart;
         this.timeSpan = timeSpan;
     }
@@ -130,7 +129,7 @@ public class UpdateGraphTask extends AsyncTask<Context, Void, BarData> {
                 if (index < 0 || index >= labels.size()) {
                     return "";
                 }
-                if (timeSpan == StatsGraphFragment.TimeSpan.Month && index % 2 == 1) {
+                if (timeSpan == TimeSpan.Month && index % 2 == 1) {
                     return "";
                 }
                 return labels.get(index);

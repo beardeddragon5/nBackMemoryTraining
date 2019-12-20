@@ -49,7 +49,6 @@ public class ScoreActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.score_correct)).setText(correctText);
         ((TextView) findViewById(R.id.score_percent)).setText(percent);
         ((TextView) findViewById(R.id.score_score)).setText(String.valueOf(score));
-
     }
 
     public void onClickReplay(@SuppressWarnings("unused") View view) {

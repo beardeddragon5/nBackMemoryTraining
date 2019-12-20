@@ -6,6 +6,7 @@ import android.text.InputType;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.preference.EditTextPreference;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -24,10 +25,31 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         assert activity != null;
 
         final SettingsViewModel viewModel = ViewModelProviders.of(activity).get(SettingsViewModel.class);
-        final Preference nPref = findPreference(NBackPreferences.Settings.N.key);
-        final Preference endConditionPref = findPreference(NBackPreferences.Settings.EndCondition.key);
-        final Preference timeLimitPref = findPreference(NBackPreferences.Settings.TimeLimit.key);
-        final Preference expressionLimitPref = findPreference(NBackPreferences.Settings.ExpressionLimit.key);
+
+        final EditTextPreference nPref = findPreference(NBackPreferences.Settings.N.key);
+        final ListPreference endConditionPref = findPreference(NBackPreferences.Settings.EndCondition.key);
+        final EditTextPreference timeLimitPref = findPreference(NBackPreferences.Settings.TimeLimit.key);
+        final EditTextPreference expressionLimitPref = findPreference(NBackPreferences.Settings.ExpressionLimit.key);
+
+        nPref.setPersistent(false);
+        endConditionPref.setPersistent(false);
+        timeLimitPref.setPersistent(false);
+        expressionLimitPref.setPersistent(false);
+
+        if (viewModel.hasChanged()) {
+            if (viewModel.getValues().containsKey(NBackPreferences.Settings.N)) {
+                nPref.setText(viewModel.getValues().get(NBackPreferences.Settings.N));
+            }
+            if (viewModel.getValues().containsKey(NBackPreferences.Settings.EndCondition)) {
+                endConditionPref.setValue(viewModel.getValues().get(NBackPreferences.Settings.EndCondition));
+            }
+            if (viewModel.getValues().containsKey(NBackPreferences.Settings.TimeLimit)) {
+                timeLimitPref.setText(viewModel.getValues().get(NBackPreferences.Settings.TimeLimit));
+            }
+            if (viewModel.getValues().containsKey(NBackPreferences.Settings.ExpressionLimit)) {
+                expressionLimitPref.setText(viewModel.getValues().get(NBackPreferences.Settings.ExpressionLimit));
+            }
+        }
 
         assert nPref != null;
         assert endConditionPref != null;
@@ -39,19 +61,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         timeLimitPref.setSummaryProvider(new FormatSummaryProvider(getResources().getString(R.string.pref_time_limit_summary)));
         expressionLimitPref.setSummaryProvider(new FormatSummaryProvider(getResources().getString(R.string.pref_expression_limit_summary)));
 
-        setPreferenceInputType((EditTextPreference) nPref, InputType.TYPE_CLASS_NUMBER);
-        setPreferenceInputType((EditTextPreference) timeLimitPref, InputType.TYPE_CLASS_DATETIME | InputType.TYPE_DATETIME_VARIATION_TIME);
-        setPreferenceInputType((EditTextPreference) expressionLimitPref, InputType.TYPE_CLASS_NUMBER);
+        setPreferenceInputType(nPref, InputType.TYPE_CLASS_NUMBER);
+        setPreferenceInputType(timeLimitPref, InputType.TYPE_CLASS_DATETIME | InputType.TYPE_DATETIME_VARIATION_TIME);
+        setPreferenceInputType(expressionLimitPref, InputType.TYPE_CLASS_NUMBER);
 
         nPref.setOnPreferenceChangeListener(viewModel.onChange(NBackPreferences.Settings.N, "\\d{1,10}"));
         endConditionPref.setOnPreferenceChangeListener(viewModel.onChange(NBackPreferences.Settings.EndCondition, "(expression)|(time)"));
         timeLimitPref.setOnPreferenceChangeListener(viewModel.onChange(NBackPreferences.Settings.TimeLimit, "(\\d?\\d:)?(\\d?\\d:\\d\\d)"));
         expressionLimitPref.setOnPreferenceChangeListener(viewModel.onChange(NBackPreferences.Settings.ExpressionLimit, "\\d{1,10}"));
-
-        nPref.setPersistent(false);
-        endConditionPref.setPersistent(false);
-        timeLimitPref.setPersistent(false);
-        expressionLimitPref.setPersistent(false);
     }
 
 
