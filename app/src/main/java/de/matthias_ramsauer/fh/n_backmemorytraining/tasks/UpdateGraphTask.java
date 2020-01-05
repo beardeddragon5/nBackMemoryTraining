@@ -118,6 +118,9 @@ public class UpdateGraphTask extends AsyncTask<Context, Void, BarData> {
 
     @Override
     protected void onPostExecute(BarData data) {
+        if (data == null) {
+            return;
+        }
         chart.getXAxis().setLabelCount(labels.size());
         chart.getXAxis().setAxisMinimum(0 - data.getBarWidth() / 2);
         chart.getXAxis().setAxisMaximum(labels.size() - 1 + data.getBarWidth() / 2);
