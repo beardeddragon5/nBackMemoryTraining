@@ -17,7 +17,7 @@ import de.matthias_ramsauer.fh.n_backmemorytraining.viewmodel.GameViewModel;
 import de.matthias_ramsauer.fh.n_backmemorytraining.ui.game.NextFragment;
 import de.matthias_ramsauer.fh.n_backmemorytraining.ui.game.NumpadFragment;
 
-public abstract class GameActivity extends AppCompatActivity {
+public abstract class AbstractGameActivity extends AppCompatActivity {
 
     GameViewModel viewModel;
 

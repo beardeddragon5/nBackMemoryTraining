@@ -52,8 +52,16 @@ public class ScoreActivity extends AppCompatActivity {
     }
 
     public void onClickReplay(@SuppressWarnings("unused") View view) {
-        final Intent i = new Intent(this, GameActivity.class);
-        startActivity(i);
+        final NBackPreferences.EndCondition condition = NBackPreferences.getEndCondition(this);
+        switch (condition) {
+            case time:
+                startActivity(new Intent(this, TimeGameActivity.class));
+                break;
+            case expression:
+                startActivity(new Intent(this, ExpressionGameActivity.class));
+                break;
+        }
+        this.finishAndRemoveTask();
     }
 
     public void onClickMenu(@SuppressWarnings("unused") View view) {

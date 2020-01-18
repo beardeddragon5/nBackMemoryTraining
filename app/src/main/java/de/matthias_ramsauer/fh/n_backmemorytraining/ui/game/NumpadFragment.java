@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import de.matthias_ramsauer.fh.n_backmemorytraining.GameActivity;
+import de.matthias_ramsauer.fh.n_backmemorytraining.AbstractGameActivity;
 import de.matthias_ramsauer.fh.n_backmemorytraining.R;
 import de.matthias_ramsauer.fh.n_backmemorytraining.viewmodel.GameViewModel;
 
@@ -83,14 +83,14 @@ public class NumpadFragment extends Fragment implements Animator.AnimatorListene
 
     @Override
     public void onAnimationEnd(Animator animation) {
-        final GameActivity activity = (GameActivity) getActivity();
+        final AbstractGameActivity activity = (AbstractGameActivity) getActivity();
         if (activity == null) return;
         activity.onNextExpression();
     }
 
     @Override
     public void onAnimationCancel(Animator animation) {
-        final GameActivity activity = (GameActivity) getActivity();
+        final AbstractGameActivity activity = (AbstractGameActivity) getActivity();
         if (activity == null) return;
         activity.onNextExpression();
     }

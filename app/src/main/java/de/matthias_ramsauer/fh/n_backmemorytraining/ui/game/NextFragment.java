@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import de.matthias_ramsauer.fh.n_backmemorytraining.GameActivity;
+import de.matthias_ramsauer.fh.n_backmemorytraining.AbstractGameActivity;
 import de.matthias_ramsauer.fh.n_backmemorytraining.R;
 
 public class NextFragment extends Fragment {
@@ -27,7 +27,7 @@ public class NextFragment extends Fragment {
     }
 
     private void onNextClick(@SuppressWarnings("unused") View view) {
-        final GameActivity activity = (GameActivity) getActivity();
+        final AbstractGameActivity activity = (AbstractGameActivity) getActivity();
         assert activity != null;
         activity.onNextExpression();
     }

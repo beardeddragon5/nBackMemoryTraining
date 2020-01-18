@@ -30,8 +30,8 @@ public abstract class StatsDatabase extends RoomDatabase {
             synchronized (StatsDatabase.class) {
                 if (dbInstance == null) {
                     dbInstance = buildDatabase(context.getApplicationContext());
-                    /*
-                    final Locale locale = context.getResources().getConfiguration().locale;
+
+                    /*final Locale locale = context.getResources().getConfiguration().locale;
                     final Calendar cal = Calendar.getInstance(locale);
                     final Random rand = new Random();
 
@@ -47,16 +47,15 @@ public abstract class StatsDatabase extends RoomDatabase {
                                     return dbInstance;
                                 }
 
-                                int n = rand.nextInt(6) + 1;
+                                int n = rand.nextInt(4) + 1;
                                 int expressionCount = rand.nextInt(20) + 5;
-                                double percent = rand.nextDouble();
+                                double percent = Math.max(0.2, rand.nextDouble());
                                 int score = (int) Math.ceil(percent * expressionCount * Math.pow(10, n));
 
                                 dbInstance.statsDao().addStats(n, expressionCount, score, cal.getTime());
                             }
                         }
-                    }
-                    */
+                    }*/
                 }
             }
         }

@@ -10,7 +10,7 @@ import de.matthias_ramsauer.fh.n_backmemorytraining.model.Expression;
 import de.matthias_ramsauer.fh.n_backmemorytraining.util.ExpressionBuilder;
 import de.matthias_ramsauer.fh.n_backmemorytraining.viewmodel.GameViewModel;
 
-public class TimeGameActivity extends GameActivity {
+public class TimeGameActivity extends AbstractGameActivity {
 
     private CountDownTimer countDownTimer;
 

@@ -10,7 +10,7 @@ import de.matthias_ramsauer.fh.n_backmemorytraining.model.Expression;
 import de.matthias_ramsauer.fh.n_backmemorytraining.util.ExpressionBuilder;
 import de.matthias_ramsauer.fh.n_backmemorytraining.viewmodel.GameViewModel;
 
-public class ExpressionGameActivity extends GameActivity {
+public class ExpressionGameActivity extends AbstractGameActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
