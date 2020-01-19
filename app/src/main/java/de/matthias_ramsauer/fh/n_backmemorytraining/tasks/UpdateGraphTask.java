@@ -38,20 +38,21 @@ public class UpdateGraphTask extends AsyncTask<Context, Void, BarData> {
         final StatsDatabase db = StatsDatabase.getInstance(contexts[0]);
         final List<Stats> values;
         final Calendar cal = Calendar.getInstance(locale);
-        cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
-        cal.clear(Calendar.MINUTE);
-        cal.clear(Calendar.SECOND);
-        cal.clear(Calendar.MILLISECOND);
+        cal.set(Calendar.HOUR_OF_DAY, cal.getActualMaximum(Calendar.HOUR_OF_DAY)); // ! clear would not reset the hour of day !
+        cal.set(Calendar.MINUTE, cal.getActualMaximum(Calendar.MINUTE));
+        cal.set(Calendar.SECOND, cal.getActualMaximum(Calendar.SECOND));
+        cal.set(Calendar.MILLISECOND, cal.getActualMaximum(Calendar.MILLISECOND));
 
         switch (timeSpan) {
             case Week:
-                cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+                cal.add(Calendar.DAY_OF_WEEK, -cal.getActualMaximum(Calendar.DAY_OF_WEEK));
                 break;
             case Month:
-                cal.set(Calendar.DAY_OF_MONTH, 1);
+                cal.add(Calendar.DAY_OF_MONTH, -cal.getActualMaximum(Calendar.DAY_OF_MONTH));
                 break;
             case Year:
-                cal.set(Calendar.DAY_OF_YEAR, 1);
+                cal.add(Calendar.MONTH, -cal.getActualMaximum(Calendar.MONTH));
+                cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
                 break;
             default:
                 throw new UnsupportedOperationException();
@@ -62,28 +63,23 @@ public class UpdateGraphTask extends AsyncTask<Context, Void, BarData> {
             return null;
         }
 
-
+        int calField;
         switch (timeSpan) {
             case Week:
-                for (int i = 1; i <= cal.getActualMaximum(Calendar.DAY_OF_WEEK); i++) {
-                    cal.set(Calendar.DAY_OF_WEEK, i);
-                    labels.add(timeSpan.format(locale, cal.getTime()));
-                }
+                calField = Calendar.DAY_OF_WEEK;
                 break;
             case Month:
-                for (int i = 1; i <= cal.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
-                    cal.set(Calendar.DAY_OF_MONTH, i);
-                    labels.add(timeSpan.format(locale, cal.getTime()));
-                }
+                calField = Calendar.DAY_OF_MONTH;
                 break;
             case Year:
-                for (int i = 0; i <= cal.getActualMaximum(Calendar.MONTH); i++) {
-                    cal.set(Calendar.MONTH, i);
-                    labels.add(timeSpan.format(locale, cal.getTime()));
-                }
+                calField = Calendar.MONTH;
                 break;
             default:
                 throw new UnsupportedOperationException();
+        }
+        for (int i = 0; i < cal.getActualMaximum(calField); i++) {
+            cal.add(calField, 1);
+            labels.add(timeSpan.format(locale, cal.getTime()));
         }
 
 
