@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceManager;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -22,6 +23,15 @@ public class SettingsViewModel extends ViewModel implements Serializable {
             values.clear();
         }
         return saved;
+    }
+
+    public void delete(@NonNull Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit().clear().apply();
+    }
+
+    public void revertChanges() {
+        values.clear();
     }
 
     public boolean hasChanged() {

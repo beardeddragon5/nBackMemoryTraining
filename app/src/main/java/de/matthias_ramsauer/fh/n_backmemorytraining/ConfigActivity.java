@@ -34,6 +34,7 @@ public class ConfigActivity extends AppCompatActivity {
     }
 
     private void reloadSettings() {
+        viewModel.revertChanges();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.settings, new SettingsFragment())
@@ -71,8 +72,7 @@ public class ConfigActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.itemResetToDefault:
-                PreferenceManager.getDefaultSharedPreferences(this)
-                        .edit().clear().apply();
+                viewModel.delete(this);
                 reloadSettings();
                 Toast.makeText(this, R.string.toast_reset_to_default, Toast.LENGTH_SHORT).show();
                 return true;
