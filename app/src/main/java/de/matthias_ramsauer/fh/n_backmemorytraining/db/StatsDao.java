@@ -23,6 +23,9 @@ public interface StatsDao {
     @Query("SELECT * FROM stats WHERE stats.date >= :date")
     List<Stats> getStatsSince(Date date);
 
+    @Query("DELETE FROM stats WHERE stats.date < :date and stats.score != :score")
+    void deleteStatsUntil(Date date, int score);
+
     @Query("INSERT INTO stats (n, expression_count, score, date) VALUES(:n, :expressionCount, :score, :date)")
     void addStats(int n, int expressionCount, int score, Date date);
 

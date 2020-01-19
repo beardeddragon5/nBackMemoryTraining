@@ -44,6 +44,9 @@ public class InsertScoreTask extends AsyncTask<Context, Void, int[]> {
         final int bestToday = db.statsDao().getBestScoreSince(cal.getTime());
         final int best = db.statsDao().getBestScore();
 
+        cal.add(Calendar.DAY_OF_YEAR, -cal.getActualMaximum(Calendar.DAY_OF_YEAR));
+        db.statsDao().deleteStatsUntil(cal.getTime(), best);
+
         return new int[]{bestToday, best};
     }
 
